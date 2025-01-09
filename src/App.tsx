@@ -1,11 +1,26 @@
 import './App.css'
+import {HelmetProvider} from "react-helmet-async";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import {AuthProvider} from "./context/AuthContext.tsx";
+import LoginPage from "./pages/LoginPage";
+import HomeScreen from "./pages/(logged-in)/HomeScreen.tsx";
+import ProtectedRoute from "./utils/ProtectedRoutes.tsx";
+import ViewClientsScreen from "./pages/(logged-in)/clients/ViewClientsScreen.tsx";
 
 function App() {
 
   return (
-    <>
-        <h1 className="text-green-500">yooooo</h1>
-    </>
+      <HelmetProvider>
+          <AuthProvider>
+              <BrowserRouter>
+                  <Routes>
+                      <Route index path="/" element={<LoginPage/>}/>
+                      <Route path="/hjem" element={<ProtectedRoute> <HomeScreen/> </ProtectedRoute>}/>
+                      <Route path="/kunder" element={<ProtectedRoute> <ViewClientsScreen/> </ProtectedRoute>}/>
+                  </Routes>
+              </BrowserRouter>
+          </AuthProvider>
+      </HelmetProvider>
   )
 }
 
