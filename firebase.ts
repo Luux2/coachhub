@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
@@ -16,5 +16,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 export const database = getDatabase(app);
+
+setPersistence(auth, browserSessionPersistence)
+    .then(() => {
+    })
+    .catch((error) => {
+        console.error("Failed to set persistence:", error);
+    });
 
 export { app, auth };

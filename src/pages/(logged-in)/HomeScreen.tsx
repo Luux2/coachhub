@@ -1,6 +1,7 @@
 import {useUserData} from "../../context/AuthContext.tsx";
 import {UserGroupIcon} from "@heroicons/react/24/solid";
 import {useNavigate} from "react-router-dom";
+import Animation from "../../components/misc/Animation.tsx";
 
 export const HomeScreen = () => {
     const {user} = useUserData();
@@ -12,6 +13,7 @@ export const HomeScreen = () => {
 
 
     return (
+        <Animation>
         <section className="flex flex-col justify-center min-h-screen">
 
             <header>
@@ -21,7 +23,7 @@ export const HomeScreen = () => {
             <ul className="mt-20 grid grid-cols-4 gap-28 mx-60">
 
                 <li onClick={handleNavCustomers}
-                    className="cursor-pointer h-full flex flex-col items-center overflow-hidden border-2 border-gray-500">
+                    className="cursor-pointer group h-full flex flex-col items-center overflow-hidden border-2 border-gray-500">
 
                     <UserGroupIcon className="h-96 w-48 transition duration-500 group-hover:scale-105"/>
 
@@ -31,7 +33,7 @@ export const HomeScreen = () => {
                 </li>
 
                 <li onClick={handleNavCustomers}
-                    className="cursor-pointer h-full flex flex-col items-center overflow-hidden border-2 border-gray-500">
+                    className="cursor-pointer group h-full flex flex-col items-center overflow-hidden border-2 border-gray-500">
 
                     <UserGroupIcon className="h-96 w-48 transition duration-500 group-hover:scale-105"/>
 
@@ -41,7 +43,7 @@ export const HomeScreen = () => {
                 </li>
 
                 <li onClick={handleNavCustomers}
-                    className="cursor-pointer h-full flex flex-col items-center overflow-hidden border-2 border-gray-500">
+                    className="cursor-pointer group h-full flex flex-col items-center overflow-hidden border-2 border-gray-500">
 
                     <UserGroupIcon className="h-96 w-48 transition duration-500 group-hover:scale-105"/>
 
@@ -51,7 +53,7 @@ export const HomeScreen = () => {
                 </li>
 
                 <li onClick={handleNavCustomers}
-                    className="cursor-pointer h-full flex flex-col items-center overflow-hidden border-2 border-gray-500">
+                    className="cursor-pointer group h-full flex flex-col items-center overflow-hidden border-2 border-gray-500">
 
                     <UserGroupIcon className="h-96 w-48 transition duration-500 group-hover:scale-105"/>
 
@@ -69,6 +71,7 @@ export const HomeScreen = () => {
             </div>
 
         </section>
+        </Animation>
     );
 };
 
