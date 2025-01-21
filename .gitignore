@@ -11,7 +11,9 @@ node_modules
 dist
 dist-ssr
 *.local
-/server/coachhub-2c82c-firebase-adminsdk-usfdk-5940b4bfe5.json
+/server/coachhub-2c82c-firebase-adminsdk-usfdk-8e554b0e7b.json
+/firebase.ts
+/server/config/firebase.js
 
 # Editor directories and files
 .vscode/*

@@ -1,6 +1,6 @@
 var admin = require("firebase-admin");
 
-var serviceAccount = require("../coachhub-2c82c-firebase-adminsdk-usfdk-5940b4bfe5.json");
+var serviceAccount = require("../coachhub-2c82c-firebase-adminsdk-usfdk-8e554b0e7b.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),

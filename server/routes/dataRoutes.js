@@ -12,6 +12,8 @@ router.get('/clients', clientController.getClients);
 router.get('/clients/:id', clientController.getClientById);
 router.post('/clients', clientController.postClient);
 router.get('/clients/:id/stampCards', clientController.getStampCards);
+router.get('/clients/:id/stampCards/:stampCardId', clientController.getStampCardById);
 router.post('/clients/:id/stampCards', clientController.postStampCard);
+router.patch('/clients/:id/stampCards/:stampCardId', clientController.patchStampCard);
 
 module.exports = router;

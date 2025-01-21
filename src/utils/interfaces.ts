@@ -24,15 +24,19 @@ export interface ClientInterface {
     }[];
     responsible: string;
     stampCards: {
-        [key: string]: {
-            name: string;
-            created: string;
-            stampValue: number;
-            stampUnit: string;
-            price: number;
-            initialStampCount: number;
-            currentStampCount: number;
-            lastStamp: string;
-        };
+        [key: string]: StampCardInterface;
     };
+}
+
+export interface StampCardInterface {
+    id?: string;
+    name: string;
+    created: string;
+    stampValue: number;
+    stampUnit: string;
+    price: number;
+    initialStampCount: number;
+    currentStampCount: number;
+    lastStamp: string;
+    notes: string;
 }
