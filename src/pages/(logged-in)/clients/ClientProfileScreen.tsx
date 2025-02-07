@@ -11,6 +11,7 @@ import {StampCardInterface} from "../../../utils/interfaces.ts";
 import EditStampCardDialog from "../../../components/stampCard/EditStampCardDialog.tsx";
 import ClientService from "../../../services/ClientService.tsx";
 import StampCardService from "../../../services/StampCardService.tsx";
+import {Helmet} from "react-helmet-async";
 
 export const ClientProfileScreen = () => {
     const navigate = useNavigate();
@@ -64,6 +65,11 @@ export const ClientProfileScreen = () => {
 
     return (
         <>
+
+            <Helmet>
+                <title>CoachHub - {client?.companyName}</title>
+            </Helmet>
+
 
             <div
                 className={`${!deleteWarningVisible ? "hidden" : ""} fixed inset-0 z-10 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>

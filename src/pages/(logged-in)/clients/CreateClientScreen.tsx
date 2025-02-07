@@ -6,6 +6,7 @@ import Animation from "../../../components/misc/Animation.tsx";
 import ClientService from "../../../services/ClientService.tsx";
 import {ClientInterface} from "../../../utils/interfaces.ts";
 import {useUserData} from "../../../context/AuthContext.tsx";
+import {Helmet} from "react-helmet-async";
 
 export const CreateClientScreen = () => {
     const {user} = useUserData();
@@ -97,6 +98,11 @@ export const CreateClientScreen = () => {
     
 
     return (
+        <>
+        <Helmet>
+            <title>CoachHub - Opret kunde</title>
+        </Helmet>
+
         <Animation>
             <div className="mt-10">
                 <h1 className="text-3xl font-extrabold mx-60 p-12">Opret ny kunde</h1>
@@ -231,6 +237,7 @@ export const CreateClientScreen = () => {
                 </div>
             </div>
         </Animation>
+        </>
     );
 };
 

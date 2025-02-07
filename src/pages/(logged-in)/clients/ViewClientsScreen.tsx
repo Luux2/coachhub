@@ -4,6 +4,7 @@ import LoadingBar from "../../../components/misc/LoadingBar";
 import Animation from "../../../components/misc/Animation";
 import { useNavigate } from "react-router-dom";
 import {useUserData} from "../../../context/AuthContext.tsx";
+import {Helmet} from "react-helmet-async";
 
 export const ViewClientsScreen = () => {
     const { user } = useUserData();
@@ -28,6 +29,11 @@ export const ViewClientsScreen = () => {
     }
 
     return (
+        <>
+        <Helmet>
+            <title>CoachHub - Kunder</title>
+        </Helmet>
+
         <Animation>
 
             <div className="mx-40 mt-10">
@@ -76,6 +82,7 @@ export const ViewClientsScreen = () => {
                 </div>
             </div>
         </Animation>
+        </>
     );
 };
 

@@ -5,6 +5,7 @@ import LoadingBar from "../../../../components/misc/LoadingBar.tsx";
 import {addHours} from "date-fns";
 import StampCardService from "../../../../services/StampCardService.tsx";
 import useClient from "../../../../hooks/useClient.ts";
+import {Helmet} from "react-helmet-async";
 
 export const CreateStampCardScreen = () => {
     const {clientId} = useParams();
@@ -57,6 +58,12 @@ export const CreateStampCardScreen = () => {
 
 
     return (
+        <>
+            <Helmet>
+                <title>CoachHub - Opret klippekort</title>
+            </Helmet>
+
+
         <Animation>
             <div className="mt-10">
                 <h1 className="text-3xl font-extrabold mx-60 p-12">Opret klippekort for {client?.companyName}</h1>
@@ -140,6 +147,7 @@ export const CreateStampCardScreen = () => {
             </div>
             </div>
         </Animation>
+        </>
     );
 };
 
