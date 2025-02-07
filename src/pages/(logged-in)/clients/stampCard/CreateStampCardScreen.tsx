@@ -63,7 +63,6 @@ export const CreateStampCardScreen = () => {
                 <title>CoachHub - Opret klippekort</title>
             </Helmet>
 
-
         <Animation>
             <div className="mt-10">
                 <h1 className="text-3xl font-extrabold mx-60 p-12">Opret klippekort for {client?.companyName}</h1>
