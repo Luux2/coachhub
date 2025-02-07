@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-/server/coachhub-2c82c-firebase-adminsdk-usfdk-8e554b0e7b.json
+/server/coachhub-2c82c-firebase-adminsdk-usfdk-bfd5ad4b43.json
 /firebase.ts
 /server/config/firebase.js
 

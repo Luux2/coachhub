@@ -35,6 +35,12 @@ export const CreateStampCardScreen = () => {
             notes: notes
         }
 
+        if (!stampCardName) {
+            return (
+                alert("Angiv navn på klippekort.")
+            );
+        }
+
         try {
         await StampCardService.createStampCard(stampCard, clientId!);
         } catch (error) {

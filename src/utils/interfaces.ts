@@ -10,20 +10,20 @@ export interface ClientInterface {
     companyName: string;
     address: string;
     city: string;
-    zipCode: string;
+    zipCode: number;
     cvr: number;
-    contacts: {
+    contacts?: {
         name: string;
         mail: string;
         phone: string;
     }[];
     status: string;
-    notes: {
+    notes?: {
         note: string;
         dateTime: string;
     }[];
     responsible: string;
-    stampCards: {
+    stampCards?: {
         [key: string]: StampCardInterface;
     };
 }

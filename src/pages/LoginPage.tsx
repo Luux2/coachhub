@@ -4,6 +4,7 @@ import {FormEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Helmet} from "react-helmet-async";
 import Animation from "../components/misc/Animation.tsx";
+import logo from "../assets/coachers-logo.png";
 
 export const LoginPage = () => {
     const [email, setEmail] = useState('');
@@ -30,7 +31,7 @@ export const LoginPage = () => {
             if (user) {
                 // Tilføj en forsinkelse, før du navigerer
                 setTimeout(() => {
-                    navigate('/hjem');
+                    navigate('/kunder');
                 }, 100);
             }
         });
@@ -48,7 +49,7 @@ export const LoginPage = () => {
             <Animation>
             <div className="min-h-screen -mt-28 flex flex-col justify-center items-center">
                     <img className="w-1/4" alt="logo"
-                         src="https://coachers.dk/wp-content/uploads/2018/08/2016-logo-sort-p%C3%A5-transparent-121-kb-1.png"></img>
+                         src={logo}></img>
 
                 <div>
                     <h1 className="mt-6 text-5xl font-bold">

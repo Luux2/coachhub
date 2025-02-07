@@ -82,5 +82,20 @@ const patchStampCard = async (req, res) => {
     }
 };
 
+const deleteStampCard = async (req, res) => {
+    const clientId = req.params.id;
+    const stampCardId = req.params.stampCardId;
 
-module.exports = {getClients, getClientById, postClient, getStampCards, getStampCardById, postStampCard, patchStampCard};
+    const ref = db.ref(`/clients/${clientId}/stampCards/${stampCardId}`);
+
+    try {
+        await ref.remove();
+        res.json({ message: 'Stamp card deleted' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to delete stamp card' });
+    }
+}
+
+
+module.exports = {getClients, getClientById, postClient, getStampCards, getStampCardById, postStampCard, patchStampCard, deleteStampCard};

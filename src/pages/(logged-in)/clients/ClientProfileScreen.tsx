@@ -4,12 +4,13 @@ import Animation from "../../../components/misc/Animation.tsx";
 import {BarsArrowDownIcon, InformationCircleIcon} from "@heroicons/react/24/outline";
 import useUsers from "../../../hooks/useUsers.ts";
 import useClient from "../../../hooks/useClient.ts";
-import {useEffect, useState} from "react";
-import DeleteWarning from "../../../components/misc/DeleteWarning.tsx";
+import {useEffect, useRef, useState} from "react";
+import DeleteWarning from "../../../components/stampCard/DeleteWarning.tsx";
 import RegisterStampsDialog from "../../../components/stampCard/RegisterStampsDialog.tsx";
 import {StampCardInterface} from "../../../utils/interfaces.ts";
 import EditStampCardDialog from "../../../components/stampCard/EditStampCardDialog.tsx";
 import ClientService from "../../../services/ClientService.tsx";
+import StampCardService from "../../../services/StampCardService.tsx";
 
 export const ClientProfileScreen = () => {
     const navigate = useNavigate();
@@ -24,14 +25,17 @@ export const ClientProfileScreen = () => {
     const [editStampCardDialogVisible, setEditStampCardDialogVisible] = useState(false);
     const [selectedStampCard, setSelectedStampCard] = useState<StampCardInterface | null>(null);
 
+    const dropdownRef = useRef<HTMLTableDataCellElement | null>(null);
 
     useEffect(() => {
-        document.addEventListener('click', (e) => {
-                if (e.target !== document.querySelector('.cursor-pointer')) {
-                    setDropdownVisible(false);
-                }
+        const handleClickOutside = (e: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+                setDropdownVisible(false);
             }
-        )
+        };
+
+        document.addEventListener("click", handleClickOutside);
+        return () => document.removeEventListener("click", handleClickOutside);
     }, []);
 
 
@@ -41,6 +45,12 @@ export const ClientProfileScreen = () => {
         const updatedClient = await ClientService.getClientById(clientId!);
         setClient(updatedClient);
     };
+
+    const handleDelete = async () => {
+        await StampCardService.deleteStampCard(selectedStampCard!.id!, clientId!);
+        setDeleteWarningVisible(false);
+        fetchClient().then();
+    }
 
 
 
@@ -57,13 +67,18 @@ export const ClientProfileScreen = () => {
 
             <div
                 className={`${!deleteWarningVisible ? "hidden" : ""} fixed inset-0 z-10 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
-                <DeleteWarning onClose={() => setDeleteWarningVisible(false)}/>
+                <DeleteWarning onClose={() => setDeleteWarningVisible(false)} onDelete={handleDelete}/>
             </div>
 
             <div
                 className={`${!registerStampsDialogVisible ? "hidden" : ""} fixed inset-0 z-10 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <RegisterStampsDialog stampCard={selectedStampCard!}
-                                      onClose={() => setRegisterStampsDialogVisible(false)}/>
+                                      onClose={() => {
+                                          setRegisterStampsDialogVisible(false);
+                                        fetchClient().then();
+                                      }}
+                                        clientId={clientId!} stampCardId={selectedStampCard?.id || ""}
+                />
             </div>
 
             <div
@@ -80,7 +95,7 @@ export const ClientProfileScreen = () => {
 
                     <h1 className="text-3xl font-extrabold">{client?.companyName}</h1>
                     {client && (
-                        <div className="flow-root my-20 border-2 rounded-xl shadow-lg">
+                        <div className="flow-root my-20 border-2 rounded-xl shadow-lg bg-white">
                             <div className="flex">
                                 <InformationCircleIcon className="h-8 w-8"/>
                                 <h1 className="font-bold px-2 text-xl">Kundedetaljer</h1>
@@ -159,9 +174,10 @@ export const ClientProfileScreen = () => {
                                                     benyttet</p>
                                             </div>
                                         </td>
-                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                        <td className="whitespace-nowrap px-4 py-2 text-gray-700"
+                                            ref={dropdownRef}>
                                             <BarsArrowDownIcon
-                                                onClick={() => dropdownVisible ? setDropdownVisible(false) : setDropdownVisible(true)}
+                                                onClick={() => setDropdownVisible(prev => !prev)}
                                                 className={`${dropdownVisible ? "text-blue-500" : "text-gray-500"} select-none cursor-pointer w-8  mx-auto`}/>
                                             <div
                                                 className={`${!dropdownVisible ? 'hidden' : ''} z-50 absolute border border-black bg-white rounded-xl p-1 w-40`}>
@@ -183,6 +199,7 @@ export const ClientProfileScreen = () => {
                                                     <li onClick={() => {
                                                         setDeleteWarningVisible(true);
                                                         setSelectedStampCard(stampCard);
+                                                        console.log(stampCard);
                                                     }}
                                                         className="hover:bg-amber-100 hover:rounded-xl p-2 cursor-pointer font-semibold text-red-500">Slet
                                                     </li>

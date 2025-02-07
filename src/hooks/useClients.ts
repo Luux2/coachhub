@@ -11,7 +11,7 @@ const useClients = () => {
         const fetchClients = async () => {
             try {
                 const data = await ClientService.getClients();
-                const sortedClients = data.sort((a, b) => a.companyName.localeCompare(b.companyName));
+                const sortedClients = data.sort((a, b) => b.companyName.localeCompare(a.companyName));
                 setClients(sortedClients);
             } catch (err) {
                 setError("Failed to fetch clients");
