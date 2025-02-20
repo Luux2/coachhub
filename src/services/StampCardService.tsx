@@ -3,13 +3,13 @@ import {StampCardInterface} from "../utils/interfaces.ts";
 
 class StampCardService {
 
-    static async getStampCards(id: string): Promise<StampCardInterface[]> {
-        const response = await apiClient.get(`/clients/${id}/stampCards`);
+    static async getStampCards(): Promise<StampCardInterface[]> {
+        const response = await apiClient.get(`/stampcards`);
         return response.data as StampCardInterface[];
     }
 
-    static async getStampCardById(stampCardId: string, id: string): Promise<StampCardInterface> {
-        const response = await apiClient.get(`/clients/${id}/stampCards/${stampCardId}`);
+    static async getStampCardById(stampCardId: string): Promise<StampCardInterface> {
+        const response = await apiClient.get(`/stampcards/${stampCardId}`);
         return response.data as StampCardInterface;
     }
 

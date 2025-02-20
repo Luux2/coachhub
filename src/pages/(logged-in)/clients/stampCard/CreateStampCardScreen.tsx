@@ -4,7 +4,7 @@ import {FormEvent, useState} from "react";
 import LoadingBar from "../../../../components/misc/LoadingBar.tsx";
 import {addHours} from "date-fns";
 import StampCardService from "../../../../services/StampCardService.tsx";
-import useClient from "../../../../hooks/useClient.ts";
+import useSingleClient from "../../../../hooks/useSingleClient.ts";
 import {Helmet} from "react-helmet-async";
 
 export const CreateStampCardScreen = () => {
@@ -19,7 +19,7 @@ export const CreateStampCardScreen = () => {
     const [price, setPrice] = useState(0);
     const [notes, setNotes] = useState("");
 
-    const {client, loading} = useClient(clientId);
+    const {client, loading} = useSingleClient(clientId);
 
 
     const handleCreateStampCard = async (e: FormEvent) => {

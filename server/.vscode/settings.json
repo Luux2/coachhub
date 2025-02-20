@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/36cc10dc-323a-4b98-97ba-64f023a740e4/resourceGroups/api/providers/Microsoft.Web/sites/coachhub-api",
+    "appService.deploySubpath": "."
+}

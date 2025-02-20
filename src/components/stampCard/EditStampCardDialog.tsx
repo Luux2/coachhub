@@ -52,6 +52,7 @@ export const EditStampCardDialog = ({onClose, stampCard, clientId, stampCardId}:
             lastStamp,
             currentStampCount,
             created,
+            clientId
         };
         await StampCardService.updateStampCard(updatedStampCard, stampCardId, clientId);
         onClose();

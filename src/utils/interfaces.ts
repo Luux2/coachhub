@@ -12,24 +12,17 @@ export interface ClientInterface {
     city: string;
     zipCode: number;
     cvr: number;
-    contacts?: {
-        name: string;
-        mail: string;
-        phone: string;
-    }[];
     status: string;
-    notes?: {
-        note: string;
-        dateTime: string;
-    }[];
     responsible: string;
-    stampCards?: {
-        [key: string]: StampCardInterface;
-    };
+    activityStatus: string;
+    stampCardIds?: string[];
+    contactIds?: string[];
+    notes?: NoteInterface[];
 }
 
 export interface StampCardInterface {
     id?: string;
+    clientId: string;
     name: string;
     created: string;
     stampValue: number;
@@ -39,4 +32,24 @@ export interface StampCardInterface {
     currentStampCount: number;
     lastStamp: string;
     notes: string;
+    stamps?: {
+        stampDate: string;
+        stampDescription: string;
+        stampResponsible: string;
+        stampsUsed: number;
+    }[];
+}
+
+export interface ContactInterface {
+    id?: string;
+    clientId: string;
+    name: string;
+    mail: string;
+    phone: string;
+    title: string;
+}
+
+export interface NoteInterface {
+    dateTime: string;
+    note: string;
 }

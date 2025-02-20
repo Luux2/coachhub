@@ -38,64 +38,6 @@ const postClient = async (req, res) => {
     res.json({message: 'Client added'});
 }
 
-const getStampCards = async (req, res) => {
-    const ref = db.ref(`/clients/${req.params.id}/stampCards`);
-    await ref.once('value', (snapshot) => {
-        const data = snapshot.val();
-
-        const stampCardsArray = data ? Object.keys(data).map(key => ({id: key, ...data[key]})) : [];
-
-        res.json(stampCardsArray);
-    });
-}
-
-const getStampCardById = async (req, res) => {
-    const clientId = req.params.id;
-    const stampCardId = req.params.stampCardId;
-
-    const ref = db.ref(`/clients/${clientId}/stampCards/${stampCardId}`);
-
-    await ref.once('value', (snapshot) => {
-        const data = snapshot.val();
-        res.json(data);
-    });
-}
-
-const postStampCard = async (req, res) => {
-    const ref = db.ref(`/clients/${req.params.id}/stampCards`);
-    await ref.push(req.body);
-    res.json({message: 'Stamp card added'});
-}
-
-const patchStampCard = async (req, res) => {
-    const clientId = req.params.id;
-    const stampCardId = req.params.stampCardId;
-
-    const ref = db.ref(`/clients/${clientId}/stampCards/${stampCardId}`);
-
-    try {
-        await ref.update(req.body);
-        res.json({ message: 'Stamp card updated' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to update stamp card' });
-    }
-};
-
-const deleteStampCard = async (req, res) => {
-    const clientId = req.params.id;
-    const stampCardId = req.params.stampCardId;
-
-    const ref = db.ref(`/clients/${clientId}/stampCards/${stampCardId}`);
-
-    try {
-        await ref.remove();
-        res.json({ message: 'Stamp card deleted' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to delete stamp card' });
-    }
-}
 
 
-module.exports = {getClients, getClientById, postClient, getStampCards, getStampCardById, postStampCard, patchStampCard, deleteStampCard};
+module.exports = {getClients, getClientById, postClient};

@@ -1,4 +1,3 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
@@ -10,7 +9,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        sans: ["'Exo 2'", "sant-serif"],
       },
       screens: {
         'xs': '640px',

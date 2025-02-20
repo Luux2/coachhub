@@ -3,6 +3,8 @@ const router = express.Router();
 
 const userController = require('../controllers/userController');
 const clientController = require('../controllers/clientController');
+const contactController = require('../controllers/contactController');
+const stampCardController = require('../controllers/stampCardController');
 
 // User routes
 router.get('/users', userController.getUsers);
@@ -11,10 +13,15 @@ router.get('/users', userController.getUsers);
 router.get('/clients', clientController.getClients);
 router.get('/clients/:id', clientController.getClientById);
 router.post('/clients', clientController.postClient);
-router.get('/clients/:id/stampCards', clientController.getStampCards);
-router.get('/clients/:id/stampCards/:stampCardId', clientController.getStampCardById);
-router.post('/clients/:id/stampCards', clientController.postStampCard);
-router.patch('/clients/:id/stampCards/:stampCardId', clientController.patchStampCard);
-router.delete('/clients/:id/stampCards/:stampCardId', clientController.deleteStampCard);
+
+// Contact routes
+router.get('/contacts', contactController.getContacts);
+router.post('/contacts', contactController.postContact);
+
+// Stamp card routes
+router.get('/stampcards', stampCardController.getStampCards);
+router.get('/stampcards/:id', stampCardController.getStampCardById);
+router.post('/stampcards', stampCardController.postStampCard);
+router.delete('/stampcards/:id', stampCardController.deleteStampCard);
 
 module.exports = router;

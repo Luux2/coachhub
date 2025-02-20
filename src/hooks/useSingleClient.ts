@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ClientInterface } from "../utils/interfaces";
 import ClientService from "../services/ClientService";
 
-const useClient = (clientId: string | undefined) => {
+const useSingleClient = (clientId: string | undefined) => {
     const [client, setClient] = useState<ClientInterface | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -32,4 +32,4 @@ const useClient = (clientId: string | undefined) => {
     return { client, loading, error, setClient};
 };
 
-export default useClient;
+export default useSingleClient;
