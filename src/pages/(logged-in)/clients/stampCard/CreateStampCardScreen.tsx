@@ -25,6 +25,7 @@ export const CreateStampCardScreen = () => {
     const handleCreateStampCard = async (e: FormEvent) => {
         e.preventDefault();
         const stampCard = {
+            clientId: clientId ?? "",
             name: stampCardName,
             created: now,
             stampValue: stampValue,
@@ -43,7 +44,7 @@ export const CreateStampCardScreen = () => {
         }
 
         try {
-        await StampCardService.createStampCard(stampCard, clientId!);
+        await StampCardService.createStampCard(stampCard);
         } catch (error) {
             console.error(error);
         } finally {
