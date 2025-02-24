@@ -1,7 +1,7 @@
 import {BarsArrowDownIcon} from "@heroicons/react/24/outline";
 import useStampCards from "../../hooks/useStampCards.ts";
 import useSingleClient from "../../hooks/useSingleClient.ts";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {StampCardInterface} from "../../utils/interfaces.ts";
 import StampCardService from "../../services/StampCardService.tsx";
@@ -12,6 +12,7 @@ import RegisterStampsDialog from "../stampCard/RegisterStampsDialog.tsx";
 import EditStampCardDialog from "../stampCard/EditStampCardDialog.tsx";
 
 export const ClientProfileStampTab = () => {
+    const navigate = useNavigate();
     const { clientId } = useParams();
     const {stampCards, loading: stampCardsLoading, error: stampCardsError} = useStampCards();
     const {setClient, loading: clientLoading, error: clientError} = useSingleClient(clientId);
@@ -65,8 +66,7 @@ export const ClientProfileStampTab = () => {
                                       onClose={() => {
                                           setRegisterStampsDialogVisible(false);
                                           fetchClient().then();
-                                      }}
-                                      clientId={clientId!} stampCardId={selectedStampCard?.id || ""}
+                                      }} stampCardId={selectedStampCard?.id || ""}
                 />
             </div>
 
@@ -97,7 +97,7 @@ export const ClientProfileStampTab = () => {
 
                         <tbody className="divide-y divide-gray-200">
                         {Object.entries(stampCards).map(([key, stampCard]) => (
-                            <tr key={key}>
+                            <tr onClick={() => navigate(`/klippekort/${stampCard.id}`)} key={key} className="hover:bg-teal-600 transition-colors duration-500 cursor-pointer">
                                 <td className="w-1/3 whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                     {stampCard.name}
                                 </td>

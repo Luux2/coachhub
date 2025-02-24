@@ -23,5 +23,6 @@ router.get('/stampcards', stampCardController.getStampCards);
 router.get('/stampcards/:id', stampCardController.getStampCardById);
 router.post('/stampcards', stampCardController.postStampCard);
 router.delete('/stampcards/:id', stampCardController.deleteStampCard);
+router.patch('/stampcards/:id/stamps', stampCardController.postStamps);
 
 module.exports = router;

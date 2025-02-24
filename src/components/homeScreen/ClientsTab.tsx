@@ -108,10 +108,10 @@ export const ClientsTab = () => {
                                 <tbody className="divide-y divide-gray-200">
                                 {sortedClients.length > 0 ? (
                                     sortedClients.map((client) => (
-                                        <tr key={client.id} className="hover:bg-teal-600 transition-colors duration-500">
-                                            <td
-                                                onClick={() => navigate(`/kunder/${client.id}/klippekort`)}
-                                                className="cursor-pointer whitespace-nowrap px-4 py-2 font-medium text-gray-900"
+                                        <tr
+                                            onClick={() => navigate(`/kunder/${client.id}/klippekort`)}
+                                            key={client.id} className="hover:bg-teal-600 transition-colors duration-500 cursor-pointer">
+                                            <td className="cursor-pointer whitespace-nowrap px-4 py-2 font-medium text-gray-900"
                                             >
                                                 {client.companyName}
                                             </td>

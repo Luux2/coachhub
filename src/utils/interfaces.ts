@@ -33,6 +33,7 @@ export interface StampCardInterface {
     lastStamp: string;
     notes: string;
     stamps?: {
+        stampTitle: string;
         stampDate: string;
         stampDescription: string;
         stampResponsible: string;

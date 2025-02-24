@@ -32,4 +32,38 @@ const deleteStampCard = async (req, res) => {
     res.json({message: 'Stamp card deleted'});
 }
 
-module.exports = {getStampCards, getStampCardById, postStampCard, deleteStampCard};
+const postStamps = async (req, res) => {
+    const { id } = req.params; // Stamp card ID
+    const { newStamp, currentStampCount } = req.body; // Modtager nye data fra frontend
+
+    const ref = db.ref(`/stampcards/${id}`);
+
+    try {
+        const snapshot = await ref.once("value");
+        const stampCard = snapshot.val();
+
+        if (!stampCard) {
+            return res.status(404).json({ error: "Stamp card not found" });
+        }
+
+        // Hent eksisterende stamps (hvis de findes, ellers tomt array)
+        const existingStamps = stampCard.stamps || [];
+
+        // Tilføj den nye registrering
+        const updatedStamps = [...existingStamps, newStamp];
+
+        // Opdater klippekortet
+        await ref.update({
+            stamps: updatedStamps,
+            currentStampCount, // Opdater antallet af brugte klip
+        });
+
+        res.json({ message: "Stamps added", updatedStamps });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to add stamps" });
+    }
+};
+
+
+module.exports = {getStampCards, getStampCardById, postStampCard, deleteStampCard, postStamps};

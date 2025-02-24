@@ -13,8 +13,8 @@ class StampCardService {
         return response.data as StampCardInterface;
     }
 
-    static async createStampCard(stampCard: StampCardInterface, id: string): Promise<void> {
-        await apiClient.post(`/clients/${id}/stampCards`, stampCard);
+    static async createStampCard(stampCard: StampCardInterface): Promise<void> {
+        await apiClient.post(`/stampcards`, stampCard);
     }
 
     static async updateStampCard(stampCard: StampCardInterface, stampCardId: string, id: string): Promise<void> {
@@ -25,9 +25,25 @@ class StampCardService {
         await apiClient.delete(`/clients/${id}/stampCards/${stampCardId}`);
     }
 
-    static async registerStamps(stampCardId: string, id: string, currentStampCount: number): Promise<void> {
-        await apiClient.patch(`/clients/${id}/stampCards/${stampCardId}`, {currentStampCount});
+    static async registerStamps(
+        stampCardId: string,
+        newStamp: {
+            stampTitle: string;
+            stampDate: string;
+            stampDescription: string;
+            stampResponsible: string;
+            stampsUsed: number;
+        },
+        currentStampCount: number
+    ): Promise<void> {
+        await apiClient.patch(`/stampcards/${stampCardId}/stamps`, {
+            newStamp,
+            currentStampCount
+        });
     }
+
+
+
 
 }
 
