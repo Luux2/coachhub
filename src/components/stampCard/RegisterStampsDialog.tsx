@@ -4,8 +4,9 @@ import {useEffect, useState} from "react";
 import StampCardService from "../../services/StampCardService.tsx";
 import {addHours} from "date-fns";
 
-export const RegisterStampsDialog = ({onClose, stampCard, stampCardId}: {
+export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardId}: {
     onClose: () => void;
+    onRegister: () => void;
     stampCard?: StampCardInterface;
     stampCardId: string;
 }) => {
@@ -61,14 +62,13 @@ export const RegisterStampsDialog = ({onClose, stampCard, stampCardId}: {
         try {
             // Opdater både currentStampCount og tilføj den nye klip-registrering til stamps-arrayet
             await StampCardService.registerStamps(stampCardId, newStamp, updatedStampCount);
-
             alert("Klip registreret");
 
         } catch (error) {
             console.error(error);
         }
 
-        onClose();
+        onRegister();
     };
 
 

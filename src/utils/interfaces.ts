@@ -54,3 +54,12 @@ export interface NoteInterface {
     dateTime: string;
     note: string;
 }
+
+export interface StampInterface {
+    id?: string;
+    stampTitle: string;
+    stampDate: string;
+    stampDescription: string;
+    stampResponsible: string;
+    stampsUsed: number;
+}

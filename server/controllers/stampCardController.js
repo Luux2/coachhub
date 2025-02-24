@@ -36,6 +36,35 @@ const postStamps = async (req, res) => {
     const { id } = req.params; // Stamp card ID
     const { newStamp, currentStampCount } = req.body; // Modtager nye data fra frontend
 
+    const ref = db.ref(`/stampcards/${id}/stamps`); // Peg direkte på stamps
+
+    try {
+        const newStampRef = ref.push(); // 🔥 Firebase genererer automatisk en unik ID
+        const newStampId = newStampRef.key; // Hent den autogenererede ID
+
+        const stampWithId = { ...newStamp };
+
+        // 🚀 Gem det nye stamp med autogeneret ID
+        await newStampRef.set(stampWithId);
+
+        // 🚀 Opdater `currentStampCount`
+        await db.ref(`/stampcards/${id}`).update({
+            currentStampCount
+        });
+
+        res.json({ message: "Stamp added", newStamp: stampWithId });
+    } catch (error) {
+        console.error("🔥 Error adding stamp:", error);
+        res.status(500).json({ error: "Failed to add stamp" });
+    }
+};
+
+
+
+const patchStamp = async (req, res) => {
+    const { id, stampId } = req.params;
+    const { newStamp, currentStampCount } = req.body;
+
     const ref = db.ref(`/stampcards/${id}`);
 
     try {
@@ -43,27 +72,40 @@ const postStamps = async (req, res) => {
         const stampCard = snapshot.val();
 
         if (!stampCard) {
+            console.error("🚨 Error: Stamp card not found!");
             return res.status(404).json({ error: "Stamp card not found" });
         }
 
-        // Hent eksisterende stamps (hvis de findes, ellers tomt array)
-        const existingStamps = stampCard.stamps || [];
+        const existingStamps = stampCard.stamps || {};
+        console.log("🔹 Existing stamps:", existingStamps);
 
-        // Tilføj den nye registrering
-        const updatedStamps = [...existingStamps, newStamp];
+        if (!existingStamps[stampId]) {
+            console.error("🚨 Error: Stamp not found!");
+            return res.status(404).json({ error: `Stamp not found: ${stampId}` });
+        }
 
-        // Opdater klippekortet
+        // Opdater `stamps`
+        existingStamps[stampId] = { ...newStamp };
+
+        // Opdater Firebase
         await ref.update({
-            stamps: updatedStamps,
-            currentStampCount, // Opdater antallet af brugte klip
+            stamps: existingStamps,
+            currentStampCount,
         });
 
-        res.json({ message: "Stamps added", updatedStamps });
+        console.log("✅ Successfully updated stampCard!");
+        res.json({ message: "Stamp updated", updatedStamps: existingStamps, currentStampCount });
+
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Failed to add stamps" });
+        console.error("🔥 Error updating stamp:", error);
+        res.status(500).json({ error: "Failed to update stamp" });
     }
 };
 
 
-module.exports = {getStampCards, getStampCardById, postStampCard, deleteStampCard, postStamps};
+
+
+
+
+
+module.exports = {getStampCards, getStampCardById, postStampCard, deleteStampCard, postStamps, patchStamp};

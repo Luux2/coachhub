@@ -8,15 +8,18 @@ import {da} from "date-fns/locale";
 import {PencilSquareIcon, PlusIcon} from "@heroicons/react/24/outline";
 import RegisterStampsDialog from "../../../../components/stampCard/RegisterStampsDialog.tsx";
 import {useState} from "react";
-import {StampCardInterface} from "../../../../utils/interfaces.ts";
+import {StampCardInterface, StampInterface} from "../../../../utils/interfaces.ts";
+import EditStampsDialog from "../../../../components/stampCard/EditStampsDialog.tsx";
 
 export const ViewStampCardScreen = () => {
     const { stampCardId } = useParams();
 
-    const {stampCard, loading: stampCardLoading, error: stampCardError} = useSingleStampCard(stampCardId);
+    const {stampCard, loading: stampCardLoading, error: stampCardError, fetchStampCards} = useSingleStampCard(stampCardId);
 
     const [selectedStampCard, setSelectedStampCard] = useState<StampCardInterface | null>(null);
+    const [selectedStamp, setSelectedStamp] = useState<StampInterface | null>(null);
     const [registerStampsDialogVisible, setRegisterStampsDialogVisible] = useState(false);
+    const [editStampsDialogVisible, setEditStampsDialogVisible] = useState(false);
 
     const isLoading = stampCardLoading;
     const error = stampCardError;
@@ -44,7 +47,27 @@ export const ViewStampCardScreen = () => {
                                       onClose={() => {
                                           setRegisterStampsDialogVisible(false);
                                       }}
+                                      onRegister={() => {
+                                            fetchStampCards().then();
+                                          setRegisterStampsDialogVisible(false);
+                                      }}
                                       stampCardId={stampCardId || ""}
+                />
+            </div>
+
+            <div
+                className={`${!editStampsDialogVisible ? "hidden" : ""} min-h-screen -mt-20 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                <EditStampsDialog
+                    stampCard={selectedStampCard!}
+                    onClose={() => setEditStampsDialogVisible(false)}
+                    onEdit={
+                    async () => {
+                        await fetchStampCards();
+                        setEditStampsDialogVisible(false);
+                }}
+                    stampCardId={stampCardId || ""}
+                    stamp={selectedStamp!}
+                    stampId={selectedStamp?.id || ""}
                 />
             </div>
 
@@ -61,9 +84,9 @@ export const ViewStampCardScreen = () => {
                                         setRegisterStampsDialogVisible(true);
                                         setSelectedStampCard(stampCard);
                                     }}
-                                            className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex gap-2">
+                                            className="bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex gap-2">
                                         <PlusIcon className="h-7" />
-                                        <p className="font-medium text-xl">Registrer klip</p>
+                                        <p className="font-medium text-lg">Registrer klip</p>
                                     </button>
                                 </div>
                                 <div
@@ -94,7 +117,7 @@ export const ViewStampCardScreen = () => {
                         </div>
 
 
-                    <div className="h-fit overflow-x-auto rounded-lg border border-gray-200 shadow-lg">
+                    <div className="h-fit overflow-x-auto rounded-lg border border-gray-200 shadow-lg overflow-hidden">
                         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                         <thead className="text-left font-bold">
                         <tr>
@@ -107,10 +130,8 @@ export const ViewStampCardScreen = () => {
                         </thead>
 
                             <tbody className="divide-y divide-gray-200">
-                            {stampCard?.stamps?.sort((a,b) => {
-                                return new Date(b.stampDate).getTime() - new Date(a.stampDate).getTime();
-                            }).map((stamp) => (
-                                <tr key={stamp.stampDate} className="hover:bg-teal-600 transition-colors duration-500">
+                            {Object.entries(stampCard.stamps || {}).map(([stampId, stamp]) => (
+                                    <tr key={stampId} className="hover:bg-teal-600 transition-colors duration-500">
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{format(new Date(stamp.stampDate), "dd. MMMM, yyyy", {locale: da})}</td>
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{stamp.stampsUsed} klip</td>
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
@@ -121,7 +142,12 @@ export const ViewStampCardScreen = () => {
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{stamp.stampResponsible.toUpperCase()}</td>
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                        <button className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex gap-2">
+                                        <button onClick={() => {
+
+                                            setEditStampsDialogVisible(true);
+                                            setSelectedStampCard(stampCard);
+                                            setSelectedStamp({ ...stamp, id: stampId });
+                                        }} className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex gap-2">
                                             <PencilSquareIcon className="h-5" />
                                             <p>Rediger</p>
                                         </button>

@@ -36,11 +36,27 @@ class StampCardService {
         },
         currentStampCount: number
     ): Promise<void> {
-        await apiClient.patch(`/stampcards/${stampCardId}/stamps`, {
+        await apiClient.post(`/stampcards/${stampCardId}/stamps`, {
             newStamp,
             currentStampCount
         });
     }
+
+
+    static async patchStamp(stampCardId: string, stampId: string, updatedStamp: any, currentStampCount: number) {
+        return apiClient.patch(`/stampcards/${stampCardId}/stamps/${stampId}`, {
+            newStamp: updatedStamp,
+            currentStampCount
+        }).then(response => {
+            console.log("✅ PATCH Response:", response.data);
+        }).catch(error => {
+            console.error("🔥 PATCH Error:", error.response?.data || error.message);
+            throw error;
+        });
+    }
+
+
+
 
 
 
