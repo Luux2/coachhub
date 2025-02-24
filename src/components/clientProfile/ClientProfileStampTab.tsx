@@ -65,8 +65,11 @@ export const ClientProfileStampTab = () => {
                 <RegisterStampsDialog stampCard={selectedStampCard!}
                                       onClose={() => {
                                           setRegisterStampsDialogVisible(false);
-                                          fetchClient().then();
                                       }} stampCardId={selectedStampCard?.id || ""}
+                                      onRegister={() => {
+                                          fetchClient().then();
+                                          setRegisterStampsDialogVisible(false);
+                                      }}
                 />
             </div>
 
