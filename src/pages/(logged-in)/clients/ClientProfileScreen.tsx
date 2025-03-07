@@ -2,7 +2,6 @@ import {Outlet, useNavigate, useParams} from "react-router-dom";
 import LoadingBar from "../../../components/misc/LoadingBar.tsx";
 import Animation from "../../../components/misc/Animation.tsx";
 import {InformationCircleIcon} from "@heroicons/react/24/outline";
-import useUsers from "../../../hooks/useUsers.ts";
 import useSingleClient from "../../../hooks/useSingleClient.ts";
 import {Helmet} from "react-helmet-async";
 import ContactsStampCardsTabs from "../../../components/clientProfile/ContactsStampCardsTabs.tsx";
@@ -13,14 +12,9 @@ export const ClientProfileScreen = () => {
     const { clientId } = useParams();
 
     const {client, loading: clientLoading, error: clientError} = useSingleClient(clientId);
-    const {users} = useUsers();
 
     const isLoading = clientLoading;
     const error = clientError;
-
-
-
-    const getUserName = (userId?: string) => users.find(user => user.id === userId)?.name ?? "Ingen ansvarlig";
 
 
 
@@ -60,12 +54,12 @@ export const ClientProfileScreen = () => {
 
                                 <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                                     <dt className="font-medium text-gray-900">Adresse</dt>
-                                    <dd className="text-gray-700 sm:col-span-2">{client?.address}, {client?.zipCode} {client?.city}</dd>
+                                    <dd className="text-gray-700 sm:col-span-2">{client?.address} {client?.zipCode === 0 || client?.city === "" ? "" : "," } {client?.zipCode !== 0 ? client?.zipCode : ""} {client?.city}</dd>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                                     <dt className="font-medium text-gray-900">CVR-nummer</dt>
-                                    <dd className="text-gray-700 sm:col-span-2">{client?.cvr}</dd>
+                                    <dd className="text-gray-700 sm:col-span-2">{client?.cvr !== 0 ? client?.cvr : ""}</dd>
                                 </div>
 
                                 <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
@@ -80,7 +74,7 @@ export const ClientProfileScreen = () => {
 
                                 <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                                     <dt className="font-medium text-gray-900">Ansvarlig konsulent</dt>
-                                    <dd className="text-gray-700 sm:col-span-2">{getUserName(client?.responsible)}</dd>
+                                    <dd className="text-gray-700 sm:col-span-2">{client?.responsible}</dd>
                                 </div>
                             </dl>
                         </div>

@@ -59,7 +59,7 @@ export const ClientProfileStampTab = () => {
 
 
     return (
-        <div>
+        <div className="overflow-y-visible">
             <div
                 className={`${!registerStampsDialogVisible ? "hidden" : ""} min-h-screen -mt-20 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <RegisterStampsDialog stampCard={selectedStampCard!}
@@ -100,12 +100,12 @@ export const ClientProfileStampTab = () => {
 
                         <tbody className="divide-y divide-gray-200">
                         {Object.entries(stampCards).map(([key, stampCard]) => (
-                            <tr onClick={() => navigate(`/klippekort/${stampCard.id}`)} key={key} className="hover:bg-teal-600 transition-colors duration-500 cursor-pointer">
-                                <td className="w-1/3 whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                            <tr key={key} className="hover:bg-teal-600 transition-colors duration-500 cursor-pointer">
+                                <td onClick={() => navigate(`/klippekort/${stampCard.id}`)} className="w-1/3 whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                     {stampCard.name}
                                 </td>
                                 <td className="w-1/2 whitespace-nowrap px-4 py-2 text-gray-700">
-                                    <div className="bg-gray-300 rounded min-w-full h-6"
+                                    <div onClick={() => navigate(`/klippekort/${stampCard.id}`)} className="bg-gray-300 rounded min-w-full h-6"
                                          style={{
                                              background: `linear-gradient(to right, #10B981 ${stampCard.currentStampCount / stampCard.initialStampCount * 100}%, #D1D5DB 0%)`,
                                          }}

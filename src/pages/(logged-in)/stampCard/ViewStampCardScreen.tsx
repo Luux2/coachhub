@@ -1,15 +1,15 @@
-import Header from "../../../../components/misc/Header.tsx";
-import Animation from "../../../../components/misc/Animation.tsx";
+import Header from "../../../components/misc/Header.tsx";
+import Animation from "../../../components/misc/Animation.tsx";
 import {useParams} from "react-router-dom";
-import LoadingBar from "../../../../components/misc/LoadingBar.tsx";
-import useSingleStampCard from "../../../../hooks/useSingleStampCard.ts";
+import LoadingBar from "../../../components/misc/LoadingBar.tsx";
+import useSingleStampCard from "../../../hooks/useSingleStampCard.ts";
 import {format} from "date-fns";
 import {da} from "date-fns/locale";
 import {PencilSquareIcon, PlusIcon} from "@heroicons/react/24/outline";
-import RegisterStampsDialog from "../../../../components/stampCard/RegisterStampsDialog.tsx";
+import RegisterStampsDialog from "../../../components/stampCard/RegisterStampsDialog.tsx";
 import {useState} from "react";
-import {StampCardInterface, StampInterface} from "../../../../utils/interfaces.ts";
-import EditStampsDialog from "../../../../components/stampCard/EditStampsDialog.tsx";
+import {StampCardInterface, StampInterface} from "../../../utils/interfaces.ts";
+import EditStampsDialog from "../../../components/stampCard/EditStampsDialog.tsx";
 
 export const ViewStampCardScreen = () => {
     const { stampCardId } = useParams();

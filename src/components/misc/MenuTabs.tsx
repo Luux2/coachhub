@@ -1,4 +1,4 @@
-import { BuildingOffice2Icon, TicketIcon, UsersIcon } from "@heroicons/react/24/outline";
+import {BuildingOffice2Icon, DocumentPlusIcon, TicketIcon, UsersIcon} from "@heroicons/react/24/outline";
 import {useNavigate, useLocation, NavLink} from "react-router-dom";
 
 export const MenuTabs = () => {
@@ -30,6 +30,13 @@ export const MenuTabs = () => {
                 className={`w-12 cursor-pointer transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 
                 ${location.pathname === "/kontaktpersoner" ? "text-white bg-teal-600 border-2 border-teal-600 rounded-full p-1" : "text-teal-600"}`}
             />
+            </NavLink>
+            <NavLink to={"/import"} className="w-12 cursor-pointer transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+                <DocumentPlusIcon
+                    onClick={() => navigate('/import')}
+                    className={`w-12 cursor-pointer transition duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 
+                ${location.pathname === "/import" ? "text-white bg-teal-600 border-2 border-teal-600 rounded-full p-1" : "text-teal-600"}`}
+                />
             </NavLink>
         </nav>
     );

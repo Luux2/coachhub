@@ -1,10 +1,10 @@
-import Animation from "../../../../components/misc/Animation.tsx";
+import Animation from "../../../components/misc/Animation.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {FormEvent, useState} from "react";
-import LoadingBar from "../../../../components/misc/LoadingBar.tsx";
+import LoadingBar from "../../../components/misc/LoadingBar.tsx";
 import {addHours} from "date-fns";
-import StampCardService from "../../../../services/StampCardService.tsx";
-import useSingleClient from "../../../../hooks/useSingleClient.ts";
+import StampCardService from "../../../services/StampCardService.tsx";
+import useSingleClient from "../../../hooks/useSingleClient.ts";
 import {Helmet} from "react-helmet-async";
 
 export const CreateStampCardScreen = () => {
@@ -61,7 +61,7 @@ export const CreateStampCardScreen = () => {
     return (
         <>
             <Helmet>
-                <title>CoachHub - Opret klippekort</title>
+                <title>Opret klippekort - {client?.companyName}</title>
             </Helmet>
 
         <Animation>
@@ -138,7 +138,7 @@ export const CreateStampCardScreen = () => {
                         <button
                             type="submit"
                             onClick={handleCreateStampCard}
-                            className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
+                            className="inline-block w-full rounded-lg bg-teal-600 hover:bg-teal-500 px-5 py-3 font-medium text-white sm:w-auto"
                         >
                             Opret klippekort
                         </button>

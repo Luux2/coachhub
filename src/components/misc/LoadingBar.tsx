@@ -1,16 +1,16 @@
 const LoadingBar = () => {
     return (
-        <div className="flex justify-center items-center min-h-screen">
-            <div className="w-full max-w-xs bg-gray-700 rounded-full dark:bg-gray-700">
+        <div className="fixed inset-0 z-50 bg-gray-500 bg-opacity-50 flex items-center justify-center h-screen">
+            <div className="w-64 bg-white rounded-full overflow-hidden">
                 <div
-                    className="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
-                    style={{width: "75%"}}
+                    className="bg-teal-600 text-xl font-medium text-white flex items-center justify-center rounded-full transition-all"
+                    style={{ width: "75%" }}
                 >
-                    70%
+                    75%
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default LoadingBar;

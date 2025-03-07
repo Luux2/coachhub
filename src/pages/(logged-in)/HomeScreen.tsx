@@ -1,9 +1,9 @@
-import Animation from "../../../components/misc/Animation.tsx";
+import Animation from "../../components/misc/Animation.tsx";
 import {Outlet} from "react-router-dom";
-import Header from "../../../components/misc/Header.tsx";
-import MenuTabs from "../../../components/misc/MenuTabs.tsx";
+import Header from "../../components/misc/Header.tsx";
+import MenuTabs from "../../components/misc/MenuTabs.tsx";
 
-export const AllClientsScreen = () => {
+export const HomeScreen = () => {
 
     return (
         <>
@@ -20,4 +20,4 @@ export const AllClientsScreen = () => {
     );
 };
 
-export default AllClientsScreen;
+export default HomeScreen;

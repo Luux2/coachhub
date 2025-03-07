@@ -6,6 +6,8 @@ import LoadingBar from "../misc/LoadingBar.tsx";
 import {Helmet} from "react-helmet-async";
 import {format} from "date-fns";
 import {da} from "date-fns/locale";
+import ChooseClientDialog from "../stampCard/ChooseClientDialog.tsx";
+
 
 export const StampCardsTab = () => {
     const navigate = useNavigate();
@@ -14,6 +16,8 @@ export const StampCardsTab = () => {
 
     const isLoading = stampCardsLoading || clientsLoading;
     const error = stampCardsError || clientsError;
+
+    const [isClientDialogVisible, setIsClientDialogVisible] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState("");
     const [sortField, setSortField] = useState<keyof typeof stampCards[0] | null>(null);
@@ -63,12 +67,20 @@ export const StampCardsTab = () => {
                 <title>CoachHub - Klippekort</title>
             </Helmet>
 
+            <div
+                className={`${!isClientDialogVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                <ChooseClientDialog clients={clients} onClose={() => setIsClientDialogVisible(false)} onSubmit={(selectedClientId) => {
+                    setIsClientDialogVisible(false);
+                    navigate(`/${selectedClientId}/opretklippekort`);
+                }}/>
+            </div>
+
 
                 <div className="w-full mx-16">
 
                         <div className="flex items-center gap-10 mb-10">
                             <button
-                                onClick={() => navigate(`/opretkunde`)}
+                                onClick={() => setIsClientDialogVisible(true)}
                                 className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors duration-300"
                             >
                                 Opret klippekort
@@ -83,8 +95,8 @@ export const StampCardsTab = () => {
                             />
                         </div>
 
-                        <div className="h-fit overflow-x-auto rounded-lg border border-gray-200 shadow-lg">
-                            <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                    <div className="max-h-[550px] overflow-auto rounded-lg border border-gray-200 shadow-lg">
+                        <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                                 <thead className="text-left bg-gray-300 font-bold">
                                 <tr>
                                     <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[20%]" onClick={() => handleSort("name")}>
