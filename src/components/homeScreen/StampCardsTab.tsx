@@ -102,17 +102,17 @@ export const StampCardsTab = () => {
                                     <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[20%]" onClick={() => handleSort("name")}>
                                         Klippekortsnavn {sortField === "name" && (sortDirection === "asc" ? "🔼" : "🔽")}
                                     </th>
-                                    <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[15%]" onClick={() => handleSort("created")}>
-                                        Oprettet {sortField === "created" && (sortDirection === "asc" ? "🔼" : "🔽")}
+                                    <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[15%]" onClick={() => handleSort("clientId")}>
+                                        Virksomhed {sortField === "clientId" && (sortDirection === "asc" ? "🔼" : "🔽")}
                                     </th>
                                     <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[35%]" onClick={() => handleSort("currentStampCount")}>
                                         Antal klip {sortField === "currentStampCount" && (sortDirection === "asc" ? "🔼" : "🔽")}
                                     </th>
-                                    <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[15%]" onClick={() => handleSort("clientId")}>
-                                        Virksomhed {sortField === "clientId" && (sortDirection === "asc" ? "🔼" : "🔽")}
-                                    </th>
                                     <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[15%]" onClick={() => handleSort("price")}>
                                         Pris {sortField === "price" && (sortDirection === "asc" ? "🔼" : "🔽")}
+                                    </th>
+                                    <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[15%]" onClick={() => handleSort("created")}>
+                                        Oprettet {sortField === "created" && (sortDirection === "asc" ? "🔼" : "🔽")}
                                     </th>
 
                                 </tr>
@@ -127,10 +127,8 @@ export const StampCardsTab = () => {
                                             >
                                                 {stampCard.name}
                                             </td>
-                                            <td
-                                                className="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
-                                            >
-                                                {format(stampCard.created, "dd. MMMM yyyy", { locale: da })}
+                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                                {getCompanyName(stampCard.clientId)}
                                             </td>
                                             <td className="whitespace-nowrap px-4 py-2">
                                                 <div
@@ -142,11 +140,12 @@ export const StampCardsTab = () => {
                                                     <p className="h-6 text-center font-bold">{stampCard.currentStampCount}/{stampCard.initialStampCount} klip benyttet</p>
                                                 </div>
                                             </td>
-
-                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                                {getCompanyName(stampCard.clientId)}
-                                            </td>
                                             <td className="%Swhitespace-nowrap px-4 py-2 text-gray-700">{stampCard.price} kr.</td>
+                                            <td
+                                                className="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
+                                            >
+                                                {format(stampCard.created, "dd. MMMM yyyy", { locale: da })}
+                                            </td>
                                         </tr>
                                     ))
                                 ) : (

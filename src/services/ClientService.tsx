@@ -17,6 +17,10 @@ class ClientService {
         await apiClient.post('/clients', client);
     }
 
+    static async updateClient(client: ClientInterface, id: string): Promise<void> {
+        await apiClient.patch(`/clients/${id}`, client);
+    }
+
 }
 
 export default ClientService;

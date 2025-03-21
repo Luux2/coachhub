@@ -116,7 +116,7 @@ export const ContactsTab = () => {
                                 <tbody className="divide-y divide-gray-200">
                                 {sortedContacts.length > 0 ? (
                                     sortedContacts.map((contact) => (
-                                        <tr key={contact.id} className="hover:bg-teal-600 transition-colors duration-500">
+                                        <tr key={contact.id} onClick={() => navigate(`${contact.id}`)} className="hover:bg-teal-600 transition-colors duration-500 cursor-pointer">
                                             <td
                                                 className="cursor-pointer whitespace-nowrap px-4 py-2 font-medium text-gray-900"
                                             >

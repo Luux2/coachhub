@@ -16,6 +16,10 @@ import ContactsTab from "./components/homeScreen/ContactsTab.tsx";
 import ViewStampCardScreen from "./pages/(logged-in)/stampCard/ViewStampCardScreen.tsx";
 import CreateContactScreen from "./pages/(logged-in)/contacts/CreateContactScreen.tsx";
 import ImportTab from "./components/homeScreen/ImportTab.tsx";
+import Test from "./pages/(logged-in)/Test.tsx";
+import ClientProfileNotesTab from "./components/clientProfile/ClientProfileNotesTab.tsx";
+import ViewContactScreen from "./pages/(logged-in)/contacts/ViewContactScreen.tsx";
+
 
 function App() {
     return (
@@ -33,6 +37,8 @@ function App() {
                                     <Route path="import" element={<ImportTab/>}/>
                                 </Route>
 
+                                <Route path="/test" element={<Test/>}/>
+
 
                                 <Route path="/opretkunde" element={<ProtectedRoute> <CreateClientScreen/> </ProtectedRoute>}/>
                                 <Route path="/:clientId/opretklippekort" element={<ProtectedRoute> <CreateStampCardScreen/> </ProtectedRoute>}/>
@@ -43,9 +49,11 @@ function App() {
                                     <Route index element={<Navigate to="/klippekort" replace/>}/>
                                     <Route path="klippekort" element={<ClientProfileStampTab/>}/>
                                     <Route path="kontaktpersoner" element={<ClientProfileContactsTab/>}/>
+                                    <Route path="noter" element={<ClientProfileNotesTab/>}/>
                                 </Route>
 
                                 <Route path="klippekort/:stampCardId" element={<ProtectedRoute> <ViewStampCardScreen/> </ProtectedRoute>}/>
+                                <Route path="kontaktpersoner/:contactId" element={<ProtectedRoute> <ViewContactScreen/> </ProtectedRoute>}/>
 
                             </Routes>
                         </BrowserRouter>

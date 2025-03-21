@@ -38,6 +38,12 @@ const postClient = async (req, res) => {
     res.json({message: 'Client added'});
 }
 
+const patchClient = async (req, res) => {
+    const ref = db.ref(`/clients/${req.params.id}`);
+    await ref.update(req.body);
+    res.json({message: 'Client updated'});
+}
 
 
-module.exports = {getClients, getClientById, postClient};
+
+module.exports = {getClients, getClientById, postClient, patchClient};

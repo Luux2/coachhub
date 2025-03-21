@@ -1,5 +1,4 @@
 import {BarsArrowDownIcon} from "@heroicons/react/24/outline";
-import useStampCards from "../../hooks/useStampCards.ts";
 import useSingleClient from "../../hooks/useSingleClient.ts";
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
@@ -10,11 +9,12 @@ import ClientService from "../../services/ClientService.tsx";
 import DeleteWarning from "../stampCard/DeleteWarning.tsx";
 import RegisterStampsDialog from "../stampCard/RegisterStampsDialog.tsx";
 import EditStampCardDialog from "../stampCard/EditStampCardDialog.tsx";
+import useStampCardsByClient from "../../hooks/useStampCardsByClient.ts";
 
 export const ClientProfileStampTab = () => {
     const navigate = useNavigate();
     const { clientId } = useParams();
-    const {stampCards, loading: stampCardsLoading, error: stampCardsError} = useStampCards();
+    const {stampCards, loading: stampCardsLoading, error: stampCardsError} = useStampCardsByClient(clientId);
     const {setClient, loading: clientLoading, error: clientError} = useSingleClient(clientId);
 
     const isLoading = clientLoading || stampCardsLoading;
@@ -61,7 +61,7 @@ export const ClientProfileStampTab = () => {
     return (
         <div className="overflow-y-visible">
             <div
-                className={`${!registerStampsDialogVisible ? "hidden" : ""} min-h-screen -mt-20 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!registerStampsDialogVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <RegisterStampsDialog stampCard={selectedStampCard!}
                                       onClose={() => {
                                           setRegisterStampsDialogVisible(false);
@@ -74,7 +74,7 @@ export const ClientProfileStampTab = () => {
             </div>
 
             <div
-                className={`${!editStampCardDialogVisible ? "hidden" : ""} min-h-screen -mt-20 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!editStampCardDialogVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <EditStampCardDialog stampCard={selectedStampCard!}
                                      onClose={() => {
                                          setEditStampCardDialogVisible(false);
@@ -83,18 +83,18 @@ export const ClientProfileStampTab = () => {
             </div>
 
             <div
-                className={`${!deleteWarningVisible ? "hidden" : ""} min-h-screen -mt-20 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!deleteWarningVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <DeleteWarning onClose={() => setDeleteWarningVisible(false)} onDelete={handleDelete} type="klippekort"/>
             </div>
 
             {stampCards && (
-                <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-lg">
-                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                <div className="overflow-x-auto overflow-y-hidden rounded-lg border border-gray-200 shadow-lg">
+                    <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
                         <thead className="text-left">
                         <tr>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Klippekortsnavn</th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Forbrug</th>
-                            <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">Handlinger</th>
+                            <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">Klippekortsnavn</th>
+                            <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">Forbrug</th>
+                            <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900 text-center">Handlinger</th>
                         </tr>
                         </thead>
 

@@ -13,14 +13,18 @@ router.get('/users', userController.getUsers);
 router.get('/clients', clientController.getClients);
 router.get('/clients/:id', clientController.getClientById);
 router.post('/clients', clientController.postClient);
+router.patch('/clients/:id', clientController.patchClient);
 
 // Contact routes
 router.get('/contacts', contactController.getContacts);
+router.get('/contacts/:id', contactController.getContactById);
+router.get('/clients/:clientId/contacts', contactController.getContactsByClientId);
 router.post('/contacts', contactController.postContact);
 
 // Stamp card routes
 router.get('/stampcards', stampCardController.getStampCards);
 router.get('/stampcards/:id', stampCardController.getStampCardById);
+router.get('/clients/:clientId/stampcards', stampCardController.getStampCardsByClientId);
 router.post('/stampcards', stampCardController.postStampCard);
 router.delete('/stampcards/:id', stampCardController.deleteStampCard);
 router.post('/stampcards/:id/stamps', stampCardController.postStamps);

@@ -20,6 +20,30 @@ const getStampCardById = async (req, res) => {
     });
 }
 
+const getStampCardsByClientId = async (req, res) => {
+    try {
+        const ref = db.ref('/stampcards');
+        const snapshot = await ref.once('value');
+
+        const data = snapshot.val();
+
+        if (!data) return res.json([]);
+
+        const clientId = req.params.clientId;
+
+        const clientStampCards = Object.entries(data)
+            .filter(([_, stampCard]) => stampCard.clientId === clientId)
+            .map(([id, stampCard]) => ({ id, ...stampCard }));
+
+        return res.json(clientStampCards);
+
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+
 const postStampCard = async (req, res) => {
     const ref = db.ref('/stampcards');
     await ref.push(req.body);
@@ -39,8 +63,7 @@ const postStamps = async (req, res) => {
     const ref = db.ref(`/stampcards/${id}/stamps`); // Peg direkte på stamps
 
     try {
-        const newStampRef = ref.push(); // 🔥 Firebase genererer automatisk en unik ID
-        const newStampId = newStampRef.key; // Hent den autogenererede ID
+        const newStampRef = ref.push();
 
         const stampWithId = { ...newStamp };
 
@@ -108,4 +131,4 @@ const patchStamp = async (req, res) => {
 
 
 
-module.exports = {getStampCards, getStampCardById, postStampCard, deleteStampCard, postStamps, patchStamp};
+module.exports = {getStampCards, getStampCardById, getStampCardsByClientId, postStampCard, deleteStampCard, postStamps, patchStamp};

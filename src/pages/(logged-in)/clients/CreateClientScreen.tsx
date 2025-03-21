@@ -22,6 +22,8 @@ export const CreateClientScreen = () => {
         cvr: 0,
         status: "Emne",
         activityStatus: "",
+        phone: 0,
+        website: "",
         notes: [{note: "", dateTime: now}],
         responsible: user!.id!,
     });
@@ -82,6 +84,7 @@ export const CreateClientScreen = () => {
             <Header/>
 
                 <h1 className="text-3xl font-extrabold mx-60 mb-5">Opret ny kunde</h1>
+
                 <div className="flex justify-center items-center mx-60 rounded-lg bg-white shadow-lg p-12">
                     <form className="space-y-4 w-full">
 

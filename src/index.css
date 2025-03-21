@@ -5,6 +5,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
+html, body {
     @apply font-sans;
+    @apply h-full w-full;
 }

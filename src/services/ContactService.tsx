@@ -13,6 +13,11 @@ class ContactService {
         return response.data as ContactInterface;
     }
 
+    static async getContactsByClient(clientId: string): Promise<ContactInterface[]> {
+        const response = await apiClient.get(`/clients/${clientId}/contacts`);
+        return response.data as ContactInterface[];
+    }
+
     static async createContact(contact: ContactInterface): Promise<void> {
         await apiClient.post('/contacts', contact);
     }

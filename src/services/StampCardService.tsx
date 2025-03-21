@@ -55,6 +55,11 @@ class StampCardService {
         });
     }
 
+    static async getStampCardsByClient(clientId: string): Promise<StampCardInterface[]> {
+        const response = await apiClient.get(`/clients/${clientId}/stampCards`);
+        return response.data as StampCardInterface[];
+    }
+
 
 
 

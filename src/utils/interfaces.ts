@@ -15,6 +15,7 @@ export interface ClientInterface {
     status: string;
     responsible: string;
     activityStatus: string;
+    phone: number;
     stampCardIds?: string[];
     contactIds?: string[];
     notes?: NoteInterface[];
@@ -48,6 +49,12 @@ export interface ContactInterface {
     mail: string;
     phone: string;
     title: string;
+    notes?: NoteInterface[];
+    socialMedia?: {
+        facebook?: string;
+        instagram?: string;
+        linkedin?: string;
+    }
 }
 
 export interface NoteInterface {

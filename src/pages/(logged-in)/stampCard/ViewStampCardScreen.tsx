@@ -21,20 +21,17 @@ export const ViewStampCardScreen = () => {
     const [registerStampsDialogVisible, setRegisterStampsDialogVisible] = useState(false);
     const [editStampsDialogVisible, setEditStampsDialogVisible] = useState(false);
 
-    const isLoading = stampCardLoading;
-    const error = stampCardError;
 
 
 
 
 
-
-    if (isLoading) {
+    if (stampCardLoading) {
         return <LoadingBar />;
     }
 
-    if (error) {
-        return <p className="text-red-500 text-center">{error}</p>;
+    if (stampCardError) {
+        return <p className="text-red-500 text-center">{stampCardError}</p>;
     }
 
 
@@ -125,7 +122,7 @@ export const ViewStampCardScreen = () => {
                             <th className="px-4 py-2 text-gray-900 select-none">Klip</th>
                             <th className="px-4 py-2 text-gray-900 select-none w-[40%]">Beskrivelse</th>
                             <th className="px-4 py-2 text-gray-900 select-none">Ansvarlig</th>
-                            <th className="px-4 py-2 text-gray-900 select-none">Handlinger</th>
+                            <th className="px-4 py-2 text-gray-900 select-none w-[8%]">Handlinger</th>
                         </tr>
                         </thead>
 
@@ -141,7 +138,7 @@ export const ViewStampCardScreen = () => {
                                         </div>
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-2 text-gray-700">{stamp.stampResponsible.toUpperCase()}</td>
-                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                    <td className="flex gap-3 whitespace-nowrap px-4 py-2 text-gray-700">
                                         <button onClick={() => {
 
                                             setEditStampsDialogVisible(true);
@@ -150,6 +147,11 @@ export const ViewStampCardScreen = () => {
                                         }} className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex gap-2">
                                             <PencilSquareIcon className="h-5" />
                                             <p>Rediger</p>
+                                        </button>
+
+                                        <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-300 flex gap-2">
+                                            <PencilSquareIcon className="h-5" />
+                                            <p>Slet</p>
                                         </button>
                                     </td>
                                 </tr>
