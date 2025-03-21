@@ -20,7 +20,7 @@ export const ImportTab = () => {
         try {
             // Tilføj spillere én efter én for at sikre korrekt rækkefølge
             for (const client of clientsToAdd) {
-                await ClientService.createClient({ companyName: client.col1, status: client.col2, address: client.col3, responsible: client.col4, activityStatus: "", cvr: 0, zipCode: 0, city: "" });
+                await ClientService.createClient({ companyName: client.col1, status: client.col2, address: client.col3, responsible: client.col4, activityStatus: "", cvr: 0, zipCode: 0, city: "", phone: 0 });
             }
             alert("Spillere tilføjet");
             window.location.reload();

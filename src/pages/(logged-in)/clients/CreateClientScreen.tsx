@@ -23,7 +23,6 @@ export const CreateClientScreen = () => {
         status: "Emne",
         activityStatus: "",
         phone: 0,
-        website: "",
         notes: [{note: "", dateTime: now}],
         responsible: user!.id!,
     });
