@@ -6,7 +6,7 @@ export const DeleteWarning = ({onClose, onDelete, type}: {
     type: string;
 }) => {
 
-    const typeText = type === "klippekort" ? "et klippekort" : type === "kontakt" ? "en kontakt" : "";
+    const typeText = type === "klippekort" ? "et klippekort" : type === "kontakt" ? "en kontakt" :  type === "note" ? "en note" : "";
 
 
     return (

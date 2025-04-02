@@ -5,7 +5,7 @@ import LoadingBar from "../../../components/misc/LoadingBar.tsx";
 import useSingleStampCard from "../../../hooks/useSingleStampCard.ts";
 import {format} from "date-fns";
 import {da} from "date-fns/locale";
-import {PencilSquareIcon, PlusIcon} from "@heroicons/react/24/outline";
+import {PencilSquareIcon, PlusIcon, XMarkIcon} from "@heroicons/react/24/outline";
 import RegisterStampsDialog from "../../../components/stampCard/RegisterStampsDialog.tsx";
 import {useState} from "react";
 import {StampCardInterface, StampInterface} from "../../../utils/interfaces.ts";
@@ -110,6 +110,10 @@ export const ViewStampCardScreen = () => {
                                     <p className="font-medium text-gray-900">{format(stampCard?.created, "dd. MMMM, yyyy", {locale: da})}</p>
                                     </div>
                                 </div>
+                                <div>
+                                    <h1 className="font-bold text-gray-900 text-lg">Note:</h1>
+                                    <p className="font-medium text-gray-900">{stampCard?.notes}</p>
+                                </div>
                             </dl>
                         </div>
 
@@ -150,7 +154,7 @@ export const ViewStampCardScreen = () => {
                                         </button>
 
                                         <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-300 flex gap-2">
-                                            <PencilSquareIcon className="h-5" />
+                                            <XMarkIcon className="h-5" />
                                             <p>Slet</p>
                                         </button>
                                     </td>

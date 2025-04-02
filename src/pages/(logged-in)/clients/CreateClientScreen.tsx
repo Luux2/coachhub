@@ -1,5 +1,4 @@
 import {useNavigate} from "react-router-dom";
-import {addHours} from "date-fns";
 import {ChangeEvent, FormEvent, useState} from "react";
 import LoadingBar from "../../../components/misc/LoadingBar.tsx";
 import Animation from "../../../components/misc/Animation.tsx";
@@ -12,7 +11,6 @@ import Header from "../../../components/misc/Header.tsx";
 export const CreateClientScreen = () => {
     const {user} = useUserData();
     const navigate = useNavigate();
-    const now = addHours(new Date(), 1).toISOString().split("Z")[0];
 
     const [client, setClient] = useState<ClientInterface>({
         companyName: "",
@@ -23,7 +21,6 @@ export const CreateClientScreen = () => {
         status: "Emne",
         activityStatus: "",
         phone: 0,
-        notes: [{note: "", dateTime: now}],
         responsible: user!.id!,
     });
 
@@ -37,15 +34,6 @@ export const CreateClientScreen = () => {
         setClient(prevClient => ({
             ...prevClient,
             [id]: type === "checkbox" ? checked : (type === "number" ? Number(value) : value),
-        }));
-    };
-
-    const handleNoteChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        const noteValue = e.target.value;
-
-        setClient(prevClient => ({
-            ...prevClient,
-            notes: [{ note: noteValue, dateTime: now }],
         }));
     };
 
@@ -87,7 +75,7 @@ export const CreateClientScreen = () => {
                 <div className="flex justify-center items-center mx-60 rounded-lg bg-white shadow-lg p-12">
                     <form className="space-y-4 w-full">
 
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-3 gap-4">
                             <label className="sr-only" htmlFor="companyName">Virksomhedsnavn</label>
                             <input
                                 className="w-full rounded-lg border-gray-200 p-3 text-sm"
@@ -104,6 +92,18 @@ export const CreateClientScreen = () => {
                                 <option value="Aktiv">Aktiv</option>
                                 <option value="Tilbudsfase">Tilbudsfase</option>
                                 <option value="Passiv">Passiv</option>
+                            </select>
+
+                            <label className="sr-only" htmlFor="status">Status</label>
+                            <select className="w-full rounded-lg border-gray-200 p-3 text-sm" id="status"
+                                    onChange={handleChange}
+                            >
+                                <option value="Emne">Emne</option>
+                                <option value="Kunde">Kunde</option>
+                                <option value="Tidligere kunde">Tidligere kunde</option>
+                                <option value="Samarbejdspartner">Samarbejdspartner</option>
+                                <option value="Leverandør">Leverandør</option>
+                                <option value="Kampagne">Kampagne</option>
                             </select>
                         </div>
 
@@ -137,17 +137,7 @@ export const CreateClientScreen = () => {
                         </div>
 
                         <div className="grid grid-cols-3 gap-4">
-                            <label className="sr-only" htmlFor="status">Status</label>
-                            <select className="w-full rounded-lg border-gray-200 p-3 text-sm" id="status"
-                                    onChange={handleChange}
-                            >
-                                <option value="Emne">Emne</option>
-                                <option value="Kunde">Kunde</option>
-                                <option value="Tidligere kunde">Tidligere kunde</option>
-                                <option value="Samarbejdspartner">Samarbejdspartner</option>
-                                <option value="Leverandør">Leverandør</option>
-                                <option value="Kampagne">Kampagne</option>
-                            </select>
+
 
                             <label className="sr-only" htmlFor="cvr">CVR-nummer</label>
                             <input
@@ -166,20 +156,19 @@ export const CreateClientScreen = () => {
                                 id="hjemmeside"
                                 onChange={handleChange}
                             />
-                        </div>
 
-
-                        <div>
-                            <label className="sr-only" htmlFor="notes">Noter</label>
-
-                            <textarea
+                            <label className="sr-only" htmlFor="telefonnummer">Telefonnummer</label>
+                            <input
                                 className="w-full rounded-lg border-gray-200 p-3 text-sm"
-                                placeholder="Noter"
-                                rows={5}
-                                id="notes"
-                                onChange={handleNoteChange}
-                            ></textarea>
+                                placeholder="Telefonnummer"
+                                type="tel"
+                                id="telefonnummer"
+                                pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}"
+                                maxLength={8}
+                                onChange={handleChange}
+                            />
                         </div>
+
 
                         <div className="mt-4">
                             <button

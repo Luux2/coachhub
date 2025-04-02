@@ -44,6 +44,27 @@ const patchClient = async (req, res) => {
     res.json({message: 'Client updated'});
 }
 
+const patchNote = async (req, res) => {
+    const { id, noteId } = req.params;
+    const ref = db.ref(`/clients/${id}/notes/${noteId}`);
+
+    try {
+        await ref.update(req.body);
+        res.json({ message: "Note updated" });
+    } catch (error) {
+        res.status(500).json({ message: "Fejl under opdatering", error });
+    }
+};
+
+const deleteNote = async (req, res) => {
+    const { id, noteId } = req.params;
+    const ref = db.ref(`/clients/${id}/notes/${noteId}`);
+
+    await ref.remove();
+    res.json({message: 'Note deleted'});
+}
 
 
-module.exports = {getClients, getClientById, postClient, patchClient};
+
+
+module.exports = {getClients, getClientById, postClient, patchClient, patchNote, deleteNote};

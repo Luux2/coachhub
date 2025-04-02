@@ -58,8 +58,9 @@ export interface ContactInterface {
 }
 
 export interface NoteInterface {
+    id?: string
     dateTime: string;
-    note: string;
+    body: string;
 }
 
 export interface StampInterface {

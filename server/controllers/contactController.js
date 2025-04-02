@@ -51,4 +51,11 @@ const postContact = async (req, res) => {
     res.json({message: 'Contact added'});
 }
 
-module.exports = {getContacts, getContactById, getContactsByClientId, postContact};
+const patchContact = async (req, res) => {
+    const ref = db.ref(`/contacts/${req.params.id}`);
+    await ref.update(req.body);
+    res.json({message: 'Contact updated'});
+}
+
+
+module.exports = {getContacts, getContactById, getContactsByClientId, postContact, patchContact};
