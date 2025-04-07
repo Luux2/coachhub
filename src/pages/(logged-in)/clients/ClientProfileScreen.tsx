@@ -8,6 +8,8 @@ import Header from "../../../components/misc/Header.tsx";
 import EditClientDialog from "../../../components/clientProfile/EditClientDialog.tsx";
 import {useState} from "react";
 import ClientService from "../../../services/ClientService.tsx";
+import CreateNoteForClientForm from "../../../components/clientProfile/CreateNoteForClientForm.tsx";
+
 
 export const ClientProfileScreen = () => {
     const navigate = useNavigate();
@@ -19,6 +21,7 @@ export const ClientProfileScreen = () => {
     const error = clientError;
 
     const [editClientDialogVisible, setEditClientDialogVisible] = useState(false);
+    const [createNoteDialogVisible, setCreateNoteDialogVisible] = useState(false);
 
     const fetchClient = async () => {
         const updatedClient = await ClientService.getClientById(clientId!);
@@ -54,6 +57,15 @@ export const ClientProfileScreen = () => {
                                        fetchClient().then();
                                    }} clientId={clientId!}/>
             </div>
+
+            <div className={`${!createNoteDialogVisible ? "hidden" : ""} fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-90 w-full h-full`}>
+                <CreateNoteForClientForm onClose={() => {
+                    setCreateNoteDialogVisible(false);
+                }} clientId={clientId!} onCreate={() => {
+                    window.location.reload();
+                }}/>
+            </div>
+
 
 
             <Animation>
@@ -124,7 +136,7 @@ export const ClientProfileScreen = () => {
                             </button>
                         ) : (
                             <button
-                                onClick={() => navigate(`/${clientId}/opretnote`)}
+                                onClick={() => setCreateNoteDialogVisible(true)}
                                 className="bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white px-4 rounded-md w-40 py-2">
                                 Opret note
                             </button>

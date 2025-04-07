@@ -2,7 +2,6 @@ import {StampCardInterface} from "../../utils/interfaces.ts";
 import {CheckIcon, MinusIcon, PlusIcon, ScissorsIcon} from "@heroicons/react/24/outline";
 import {useEffect, useState} from "react";
 import StampCardService from "../../services/StampCardService.tsx";
-import {addHours} from "date-fns";
 
 export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardId}: {
     onClose: () => void;
@@ -14,6 +13,11 @@ export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardI
     const [stampTitle, setStampTitle] = useState("");
     const [stampDescription, setStampDescription] = useState("");
     const [stampCount, setStampCount] = useState(stampCard?.currentStampCount ?? 0);
+
+    const now = new Date();
+    const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+        .toISOString()
+        .replace("Z", "");
 
     useEffect(() => {
         setStampCount(stampCard?.currentStampCount ?? 0);
@@ -54,7 +58,7 @@ export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardI
         const newStamp = {
             stampTitle: stampTitle,
             stampDescription: stampDescription,
-            stampDate: addHours(new Date(), 1).toISOString().split("Z")[0],
+            stampDate: localISO,
             stampResponsible: "pb",
             stampsUsed: newStampsUsed, // Kun nye klip
         };

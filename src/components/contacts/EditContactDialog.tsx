@@ -44,6 +44,11 @@ export const EditContactDialog = ({onClose, contact, contactId}: {
             title,
             mail,
             phone,
+            socialMedia: {
+                facebook,
+                instagram,
+                linkedin
+            },
             clientId
         };
         await ContactService.updateContact(updatedContact, contactId);

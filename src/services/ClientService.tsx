@@ -29,6 +29,10 @@ class ClientService {
         await apiClient.delete(`/clients/${id}/notes/${noteId}`);
     }
 
+    static async createNote(id: string, note: NoteInterface): Promise<void> {
+        await apiClient.post(`/clients/${id}/notes`, note);
+    }
+
 }
 
 export default ClientService;

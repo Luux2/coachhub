@@ -26,9 +26,15 @@ export const EditClientDialog = ({onClose, client, clientId}: {
 
     useEffect(() => {
         if (client) {
-            setClientData(client);
+            setClientData({
+                ...client,
+                stampCardIds: client.stampCardIds ?? [],
+                contactIds: client.contactIds ?? [],
+                notes: client.notes ?? [],
+            });
         }
     }, [client]);
+
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { id, value, type, checked } = e.target as HTMLInputElement;
@@ -70,7 +76,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                             placeholder="Virksomhedsnavn"
                             type="text"
                             id="companyName"
-                            value={clientData.companyName}
+                            value={clientData.companyName ?? ""}
                             onChange={handleChange}
                             required
                         />
@@ -100,7 +106,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                             className="w-full rounded-lg border-gray-200 p-3 text-sm"
                             placeholder="Adresse"
                             type="text"
-                            value={clientData.address}
+                            value={clientData.address ?? ""}
                             id="adresse"
                             onChange={handleChange}
                         />
@@ -110,7 +116,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                             className="w-full rounded-lg border-gray-200 p-3 text-sm"
                             placeholder="By"
                             type="text"
-                            value={clientData.city}
+                            value={clientData.city ?? ""}
                             id="by"
                             onChange={handleChange}
                         />
@@ -120,7 +126,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                             className="w-full rounded-lg border-gray-200 p-3 text-sm"
                             placeholder="Postnummer"
                             type="number"
-                            value={clientData.zipCode}
+                            value={clientData.zipCode ?? ""}
                             id="postnummer"
                             onChange={handleChange}
                         />
@@ -145,7 +151,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                                 className="w-full rounded-lg border-gray-200 p-3 pl-12 text-sm"
                                 placeholder="Telefonnummer"
                                 type="tel"
-                                value={clientData.phone}
+                                value={clientData.phone ?? ""}
                                 id="telefonnummer"
                                 onChange={handleChange}
                             />

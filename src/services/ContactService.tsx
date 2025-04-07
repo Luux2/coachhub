@@ -1,5 +1,5 @@
 import apiClient from "../utils/axiosBase";
-import {ContactInterface} from "../utils/interfaces.ts";
+import {ContactInterface, NoteInterface} from "../utils/interfaces.ts";
 
 class ContactService {
 
@@ -24,6 +24,18 @@ class ContactService {
 
     static async updateContact(contact: ContactInterface, id: string): Promise<void> {
         await apiClient.patch(`/contacts/${id}`, contact);
+    }
+
+    static async deleteContact(id: string): Promise<void> {
+        await apiClient.delete(`/contacts/${id}`);
+    }
+
+    static async createNote(contactId: string, note: NoteInterface): Promise<void> {
+        await apiClient.post(`/contacts/${contactId}/notes`, note);
+    }
+
+    static async deleteNote(contactId: string, noteId: string): Promise<void> {
+        await apiClient.delete(`/contacts/${contactId}/notes/${noteId}`);
     }
 
 }

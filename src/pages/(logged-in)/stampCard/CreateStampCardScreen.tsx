@@ -2,7 +2,6 @@ import Animation from "../../../components/misc/Animation.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {FormEvent, useState} from "react";
 import LoadingBar from "../../../components/misc/LoadingBar.tsx";
-import {addHours} from "date-fns";
 import StampCardService from "../../../services/StampCardService.tsx";
 import useSingleClient from "../../../hooks/useSingleClient.ts";
 import {Helmet} from "react-helmet-async";
@@ -10,8 +9,10 @@ import {Helmet} from "react-helmet-async";
 export const CreateStampCardScreen = () => {
     const {clientId} = useParams();
     const navigate = useNavigate();
-    const now = addHours(new Date(), 1).toISOString().split("Z")[0];
-
+    const now = new Date();
+    const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
+        .toISOString()
+        .replace("Z", "");
     const [stampCardName, setStampCardName] = useState("");
     const [stampValue, setStampValue] = useState(0);
     const [stampUnit, setStampUnit] = useState("");
@@ -27,7 +28,7 @@ export const CreateStampCardScreen = () => {
         const stampCard = {
             clientId: clientId ?? "",
             name: stampCardName,
-            created: now,
+            created: localISO,
             stampValue: stampValue,
             stampUnit: stampUnit,
             price: price,

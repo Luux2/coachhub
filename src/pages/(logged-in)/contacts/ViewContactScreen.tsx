@@ -9,9 +9,11 @@ import {da} from "date-fns/locale";
 import {PencilSquareIcon} from "@heroicons/react/24/outline";
 import EditContactDialog from "../../../components/contacts/EditContactDialog.tsx";
 import {useState} from "react";
-import {ContactInterface} from "../../../utils/interfaces.ts";
+import {ContactInterface, NoteInterface} from "../../../utils/interfaces.ts";
 import ContactService from "../../../services/ContactService.tsx";
 import {SocialIcon} from "react-social-icons";
+import DeleteWarning from "../../../components/stampCard/DeleteWarning.tsx";
+import CreateNoteForm from "../../../components/note/CreateNoteForm.tsx";
 
 export const ViewContactScreen = () => {
     const { contactId } = useParams();
@@ -19,6 +21,11 @@ export const ViewContactScreen = () => {
     const {setContact, contact, loading: contactLoading, error: contactError} = useSingleContact(contactId);
     const [editContactDialogVisible, setEditContactDialogVisible] = useState(false);
     const [selectedContact, setSelectedContact] = useState<ContactInterface | null>(null);
+    const [selectedNote, setSelectedNote] = useState<NoteInterface | null>(null);
+
+    const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
+    const [createNoteDialogVisible, setCreateNoteDialogVisible] = useState(false);
+
 
     if (contactLoading) {
         return <LoadingBar />;
@@ -31,7 +38,13 @@ export const ViewContactScreen = () => {
     const fetchContact = async () => {
         const updatedContact = await ContactService.getContactById(contactId!);
         setContact(updatedContact);
-    };
+    }
+
+    const handleDelete = async () => {
+        await ContactService.deleteNote(contactId!, selectedNote!.id!);
+        setDeleteWarningVisible(false);
+        fetchContact().then();
+    }
 
 
     return (
@@ -47,6 +60,15 @@ export const ViewContactScreen = () => {
                                        setEditContactDialogVisible(false);
                                        fetchContact().then();
                                    }} contactId={selectedContact?.id || ""}/>
+            </div>
+
+            <div
+                className={`${!deleteWarningVisible ? "hidden" : ""} fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                <DeleteWarning onClose={() => setDeleteWarningVisible(false)} onDelete={handleDelete} type="note"/>
+            </div>
+
+            <div className={`${!createNoteDialogVisible ? "hidden" : ""} fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-90`}>
+                <CreateNoteForm onClose={() => setCreateNoteDialogVisible(false)} contactId={selectedContact?.id || ""} onCreate={fetchContact}/>
             </div>
 
             <Animation>
@@ -149,6 +171,17 @@ export const ViewContactScreen = () => {
                         </dl>
                     </div>
 
+                    <div className="mb-10">
+                        <button
+                            onClick={()=> {
+                                setSelectedContact(contact);
+                                setCreateNoteDialogVisible(true);
+                            }}
+                            className="bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white px-4 rounded-md w-40 py-2">
+                            Opret note
+                        </button>
+                    </div>
+
                     <div className="overflow-x-auto overflow-y-hidden rounded-lg border border-gray-200 shadow-lg">
                         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
                             <thead className="text-left">
@@ -161,7 +194,7 @@ export const ViewContactScreen = () => {
                             </thead>
 
                             <tbody className="divide-y divide-gray-200">
-                            {Object.entries(contact?.notes ?? {}).map(([key, note]) => (
+                            {Object.entries(contact?.notes ?? {}).sort(([, a], [, b]) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime()).map(([key, note]) => (
                                 <tr key={key} className="transition duration-300">
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                         {note.body}
@@ -171,11 +204,12 @@ export const ViewContactScreen = () => {
                                     </td>
 
                                     <td className="flex gap-3 whitespace-nowrap px-4 py-2 text-gray-700">
-                                        <button className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex gap-2">
-                                            <PencilSquareIcon className="h-5" />
-                                            <p>Rediger</p>
-                                        </button>
-                                        <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-300 flex gap-2">
+                                        <button
+                                            onClick={() => {
+                                                setSelectedNote({...note, id: key});
+                                                setDeleteWarningVisible(true);
+                                            }}
+                                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-300 flex gap-2">
                                             <PencilSquareIcon className="h-5" />
                                             <p>Slet</p>
                                         </button>

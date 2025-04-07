@@ -14,6 +14,7 @@ router.get('/clients', clientController.getClients);
 router.get('/clients/:id', clientController.getClientById);
 router.post('/clients', clientController.postClient);
 router.patch('/clients/:id', clientController.patchClient);
+router.post('/clients/:id/notes', clientController.postNote);
 router.patch('/clients/:id/notes/:noteId', clientController.patchNote)
 router.delete('/clients/:id/notes/:noteId', clientController.deleteNote)
 
@@ -24,6 +25,9 @@ router.get('/contacts/:id', contactController.getContactById);
 router.get('/clients/:clientId/contacts', contactController.getContactsByClientId);
 router.post('/contacts', contactController.postContact);
 router.patch('/contacts/:id', contactController.patchContact);
+router.delete('/contacts/:id', contactController.deleteContact);
+router.post('/contacts/:id/notes', contactController.postNote);
+router.delete('/contacts/:id/notes/:noteId', contactController.deleteNote);
 
 // Stamp card routes
 router.get('/stampcards', stampCardController.getStampCards);

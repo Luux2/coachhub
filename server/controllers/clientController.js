@@ -44,6 +44,14 @@ const patchClient = async (req, res) => {
     res.json({message: 'Client updated'});
 }
 
+const postNote = async (req, res) => {
+    const { id } = req.params;
+    const ref = db.ref(`/clients/${id}/notes`);
+    const newNoteRef = ref.push();
+    await newNoteRef.set(req.body);
+    res.json({ message: "Note added", noteId: newNoteRef.key });
+};
+
 const patchNote = async (req, res) => {
     const { id, noteId } = req.params;
     const ref = db.ref(`/clients/${id}/notes/${noteId}`);
@@ -67,4 +75,4 @@ const deleteNote = async (req, res) => {
 
 
 
-module.exports = {getClients, getClientById, postClient, patchClient, patchNote, deleteNote};
+module.exports = {getClients, getClientById, postClient, patchClient, postNote, patchNote, deleteNote};
