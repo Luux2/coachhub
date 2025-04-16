@@ -99,11 +99,11 @@ export const StampCardsTab = () => {
                         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                                 <thead className="text-left bg-gray-300 font-bold">
                                 <tr>
-                                    <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[20%]" onClick={() => handleSort("name")}>
-                                        Klippekortsnavn {sortField === "name" && (sortDirection === "asc" ? "🔼" : "🔽")}
-                                    </th>
                                     <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[15%]" onClick={() => handleSort("clientId")}>
                                         Virksomhed {sortField === "clientId" && (sortDirection === "asc" ? "🔼" : "🔽")}
+                                    </th>
+                                    <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[20%]" onClick={() => handleSort("name")}>
+                                        Klippekortsnavn {sortField === "name" && (sortDirection === "asc" ? "🔼" : "🔽")}
                                     </th>
                                     <th className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[35%]" onClick={() => handleSort("currentStampCount")}>
                                         Antal klip {sortField === "currentStampCount" && (sortDirection === "asc" ? "🔼" : "🔽")}
@@ -122,13 +122,13 @@ export const StampCardsTab = () => {
                                 {sortedStampCards.length > 0 ? (
                                     sortedStampCards.map((stampCard) => (
                                         <tr key={stampCard.id} onClick={() => navigate(`/klippekort/${stampCard.id}`)} className="cursor-pointer hover:bg-teal-600 transition-colors duration-500">
+                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+                                                {getCompanyName(stampCard.clientId)}
+                                            </td>
                                             <td
                                                 className="whitespace-nowrap px-4 py-2 font-medium text-gray-900"
                                             >
                                                 {stampCard.name}
-                                            </td>
-                                            <td className="whitespace-nowrap px-4 py-2 text-gray-700">
-                                                {getCompanyName(stampCard.clientId)}
                                             </td>
                                             <td className="whitespace-nowrap px-4 py-2">
                                                 <div

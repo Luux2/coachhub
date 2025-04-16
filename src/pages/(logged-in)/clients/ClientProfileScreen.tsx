@@ -130,7 +130,7 @@ export const ClientProfileScreen = () => {
                             </button>
                         ) : window.location.pathname.includes("kontaktpersoner") ? (
                             <button
-                                onClick={() => navigate(`/${clientId}/opretkontakt`)}
+                                onClick={() => navigate(`/${clientId}/opretkontaktperson`)}
                                 className="bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white px-4 rounded-md w-40 py-2">
                                 Opret kontakt
                             </button>

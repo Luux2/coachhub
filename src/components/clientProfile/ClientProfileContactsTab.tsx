@@ -42,7 +42,7 @@ export const ClientProfileContactsTab = () => {
     };
 
     const handleDelete = async () => {
-        await StampCardService.deleteStampCard(selectedContact!.id!, clientId!);
+        await StampCardService.deleteStampCard(selectedContact!.id!);
         setDeleteWarningVisible(false);
         fetchClient().then();
     }
@@ -97,9 +97,10 @@ export const ClientProfileContactsTab = () => {
                                 <td className="w-[23%] whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                     {contact.phone}
                                 </td>
-                                <td className="flex gap-3 whitespace-nowrap px-4 py-2 text-gray-700">
+                                <td className="whitespace-nowrap px-4 py-2 text-gray-700">
                                     <button
-                                        onClick={() => {
+                                        onClick={(e) => {
+                                            e.stopPropagation();
                                             setSelectedContact(contact);
                                             setDeleteWarningVisible(true);
                                         }}

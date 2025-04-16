@@ -44,7 +44,9 @@ export const ClientProfileStampTab = () => {
     };
 
     const handleDelete = async () => {
-        await StampCardService.deleteStampCard(selectedStampCard!.id!, clientId!);
+        if (!selectedStampCard) return;
+
+        await StampCardService.deleteStampCard(selectedStampCard.id!, selectedStampCard.clientId!);
         setDeleteWarningVisible(false);
         fetchClient().then();
     }

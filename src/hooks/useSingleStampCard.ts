@@ -7,7 +7,7 @@ const useSingleStampCard = (stampCardId: string | undefined) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchStampCards = useCallback(async () => {
+    const fetchStampCard = useCallback(async () => {
         if (!stampCardId) return;
 
         setLoading(true);
@@ -23,10 +23,10 @@ const useSingleStampCard = (stampCardId: string | undefined) => {
     }, [stampCardId]);
 
     useEffect(() => {
-        fetchStampCards().then();
-    }, [fetchStampCards]);
+        fetchStampCard().then();
+    }, [fetchStampCard]);
 
-    return { stampCard, loading, error, fetchStampCards, setStampCard };
+    return { stampCard, loading, error, fetchStampCards: fetchStampCard, setStampCard };
 };
 
 export default useSingleStampCard;

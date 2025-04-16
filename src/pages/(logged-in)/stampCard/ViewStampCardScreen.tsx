@@ -1,6 +1,6 @@
 import Header from "../../../components/misc/Header.tsx";
 import Animation from "../../../components/misc/Animation.tsx";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import LoadingBar from "../../../components/misc/LoadingBar.tsx";
 import useSingleStampCard from "../../../hooks/useSingleStampCard.ts";
 import {format} from "date-fns";
@@ -10,9 +10,12 @@ import RegisterStampsDialog from "../../../components/stampCard/RegisterStampsDi
 import {useState} from "react";
 import {StampCardInterface, StampInterface} from "../../../utils/interfaces.ts";
 import EditStampsDialog from "../../../components/stampCard/EditStampsDialog.tsx";
+import DeleteWarning from "../../../components/stampCard/DeleteWarning.tsx";
+import StampCardService from "../../../services/StampCardService.tsx";
 
 export const ViewStampCardScreen = () => {
     const { stampCardId } = useParams();
+    const navigate = useNavigate();
 
     const {stampCard, loading: stampCardLoading, error: stampCardError, fetchStampCards} = useSingleStampCard(stampCardId);
 
@@ -20,6 +23,14 @@ export const ViewStampCardScreen = () => {
     const [selectedStamp, setSelectedStamp] = useState<StampInterface | null>(null);
     const [registerStampsDialogVisible, setRegisterStampsDialogVisible] = useState(false);
     const [editStampsDialogVisible, setEditStampsDialogVisible] = useState(false);
+    const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
+
+    const handleDelete = async () => {
+
+        await StampCardService.deleteStampCard(stampCardId!);
+        setDeleteWarningVisible(false);
+        navigate("/klippekort")
+    }
 
 
 
@@ -68,6 +79,11 @@ export const ViewStampCardScreen = () => {
                 />
             </div>
 
+            <div
+                className={`${!deleteWarningVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                <DeleteWarning onClose={() => setDeleteWarningVisible(false)} onDelete={handleDelete} type="klippekort"/>
+            </div>
+
             <Animation>
                 <Header />
 
@@ -76,7 +92,7 @@ export const ViewStampCardScreen = () => {
                     <h1 className="text-3xl font-extrabold">{stampCard?.name}</h1>
                         <div className="my-10 border-2 rounded-xl shadow-lg bg-white">
                             <dl className="divide-y divide-gray-100 text-sm p-4">
-                                <div>
+                                <div className="flex justify-between">
                                     <button onClick={() => {
                                         setRegisterStampsDialogVisible(true);
                                         setSelectedStampCard(stampCard);
@@ -84,6 +100,16 @@ export const ViewStampCardScreen = () => {
                                             className="bg-teal-600 text-white p-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex gap-2">
                                         <PlusIcon className="h-7" />
                                         <p className="font-medium text-lg">Registrer klip</p>
+                                    </button>
+
+                                    <button onClick={() => {
+                                        setSelectedStampCard(stampCard);
+                                        console.log(stampCardId);
+                                        setDeleteWarningVisible(true);
+                                    }}
+                                            className="bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition-colors duration-300 flex gap-2">
+                                        <XMarkIcon className="h-7" />
+                                        <p className="font-medium text-lg">Slet klippekort</p>
                                     </button>
                                 </div>
                                 <div

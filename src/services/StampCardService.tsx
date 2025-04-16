@@ -21,9 +21,11 @@ class StampCardService {
         await apiClient.patch(`/clients/${id}/stampCards/${stampCardId}`, stampCard);
     }
 
-    static async deleteStampCard(stampCardId: string, id: string): Promise<void> {
-        await apiClient.delete(`/clients/${id}/stampCards/${stampCardId}`);
+    static async deleteStampCard(stampCardId: string): Promise<void> {
+
+        await apiClient.delete(`/stampcards/${stampCardId}`);
     }
+
 
     static async registerStamps(
         stampCardId: string,
