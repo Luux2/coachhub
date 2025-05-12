@@ -5,6 +5,7 @@ import {useState} from "react";
 import LoadingBar from "../misc/LoadingBar.tsx";
 import {Helmet} from "react-helmet-async";
 import ChooseClientDialog from "../stampCard/ChooseClientDialog.tsx";
+import {ContactInterface} from "../../utils/interfaces.ts";
 
 export const ContactsTab = () => {
     const navigate = useNavigate();
@@ -18,7 +19,7 @@ export const ContactsTab = () => {
 
 
     const [searchQuery, setSearchQuery] = useState("");
-    const [sortField, setSortField] = useState<keyof typeof contacts[0] | null>(null);
+    const [sortField, setSortField] = useState<keyof ContactInterface>("name");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
     const filteredContacts = contacts.filter(contact =>

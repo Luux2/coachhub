@@ -91,7 +91,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                             onChange={handleChange}
                         />
 
-                        <select className="w-full rounded-lg border-gray-200 p-3 text-sm" id="aktivitetsstatus"
+                        <select className="w-full rounded-lg border-gray-200 p-3 text-sm" id="activityStatus"
                                 onChange={handleChange} defaultValue={clientData.activityStatus}
                         >
                             <option value="Aktiv">Aktiv</option>

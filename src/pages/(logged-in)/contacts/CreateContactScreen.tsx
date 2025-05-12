@@ -5,6 +5,7 @@ import {useParams} from "react-router-dom";
 import useSingleClient from "../../../hooks/useSingleClient.ts";
 import LoadingBar from "../../../components/misc/LoadingBar.tsx";
 import CreateContactForm from "../../../components/contacts/CreateContactForm.tsx";
+import BackArrow from "../../../components/misc/BackArrow.tsx";
 
 export const CreateContactScreen = () => {
     const {clientId} = useParams();
@@ -25,6 +26,7 @@ export const CreateContactScreen = () => {
                 <Header/>
 
                 <div className="mx-60">
+                    <BackArrow />
                 <h1 className="text-3xl font-extrabold mb-5">Opret ny kontaktperson for {client?.companyName}</h1>
 
 

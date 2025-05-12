@@ -14,6 +14,7 @@ import ContactService from "../../../services/ContactService.tsx";
 import {SocialIcon} from "react-social-icons";
 import DeleteWarning from "../../../components/stampCard/DeleteWarning.tsx";
 import CreateNoteForm from "../../../components/note/CreateNoteForm.tsx";
+import BackArrow from "../../../components/misc/BackArrow.tsx";
 
 export const ViewContactScreen = () => {
     const { contactId } = useParams();
@@ -75,7 +76,8 @@ export const ViewContactScreen = () => {
                 <Header />
 
                 <div className="mx-40">
-                    <div className="flow-root my-20 border-2 rounded-xl shadow-lg bg-white">
+                    <BackArrow />
+                    <div className="flow-root my-5 border-2 rounded-xl shadow-lg bg-white">
                         <div className="flex justify-between px-2 p-2 border-b-2 border-gray-500">
                             <h1 className="font-bold text-3xl">{contact?.name}</h1>
                             <div className="flex items-center">

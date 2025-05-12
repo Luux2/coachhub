@@ -12,6 +12,7 @@ import {StampCardInterface, StampInterface} from "../../../utils/interfaces.ts";
 import EditStampsDialog from "../../../components/stampCard/EditStampsDialog.tsx";
 import DeleteWarning from "../../../components/stampCard/DeleteWarning.tsx";
 import StampCardService from "../../../services/StampCardService.tsx";
+import BackArrow from "../../../components/misc/BackArrow.tsx";
 
 export const ViewStampCardScreen = () => {
     const { stampCardId } = useParams();
@@ -89,6 +90,7 @@ export const ViewStampCardScreen = () => {
 
                 {stampCard && (
                 <div className="mx-40 mt-10">
+                    <BackArrow />
                     <h1 className="text-3xl font-extrabold">{stampCard?.name}</h1>
                         <div className="my-10 border-2 rounded-xl shadow-lg bg-white">
                             <dl className="divide-y divide-gray-100 text-sm p-4">
@@ -167,7 +169,7 @@ export const ViewStampCardScreen = () => {
                                             <p className="text-gray-500">{stamp.stampDescription}</p>
                                         </div>
                                     </td>
-                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">{stamp.stampResponsible.toUpperCase()}</td>
+                                    <td className="whitespace-nowrap px-4 py-2 text-gray-700">{stamp.stampResponsible}</td>
                                     <td className="flex gap-3 whitespace-nowrap px-4 py-2 text-gray-700">
                                         <button onClick={() => {
 

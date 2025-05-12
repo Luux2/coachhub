@@ -5,6 +5,7 @@ import LoadingBar from "../../../components/misc/LoadingBar.tsx";
 import StampCardService from "../../../services/StampCardService.tsx";
 import useSingleClient from "../../../hooks/useSingleClient.ts";
 import {Helmet} from "react-helmet-async";
+import BackArrow from "../../../components/misc/BackArrow.tsx";
 
 export const CreateStampCardScreen = () => {
     const {clientId} = useParams();
@@ -67,7 +68,10 @@ export const CreateStampCardScreen = () => {
 
         <Animation>
             <div className="mt-10">
-                <h1 className="text-3xl font-extrabold mx-60 p-12">Opret klippekort for {client?.companyName}</h1>
+                <div className="mx-60 py-4">
+                <BackArrow />
+                <h1 className="text-3xl font-extrabold">Opret klippekort for {client?.companyName}</h1>
+                </div>
             <div className="flex justify-center items-center mx-60 rounded-lg bg-white shadow-lg p-12">
                 <form className="space-y-4 w-full">
                     <div>

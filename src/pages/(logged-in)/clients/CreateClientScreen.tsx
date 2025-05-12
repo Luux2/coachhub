@@ -7,6 +7,7 @@ import {ClientInterface} from "../../../utils/interfaces.ts";
 import {useUserData} from "../../../context/AuthContext.tsx";
 import {Helmet} from "react-helmet-async";
 import Header from "../../../components/misc/Header.tsx";
+import BackArrow from "../../../components/misc/BackArrow.tsx";
 
 export const CreateClientScreen = () => {
     const {user} = useUserData();
@@ -70,7 +71,10 @@ export const CreateClientScreen = () => {
         <Animation>
             <Header/>
 
-                <h1 className="text-3xl font-extrabold mx-60 mb-5">Opret ny kunde</h1>
+            <div className="mx-60 mb-5">
+                <BackArrow />
+                <h1 className="text-3xl font-extrabold">Opret ny kunde</h1>
+            </div>
 
                 <div className="flex justify-center items-center mx-60 rounded-lg bg-white shadow-lg p-12">
                     <form className="space-y-4 w-full">

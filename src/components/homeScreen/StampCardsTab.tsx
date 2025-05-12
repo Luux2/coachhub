@@ -7,6 +7,7 @@ import {Helmet} from "react-helmet-async";
 import {format} from "date-fns";
 import {da} from "date-fns/locale";
 import ChooseClientDialog from "../stampCard/ChooseClientDialog.tsx";
+import {StampCardInterface} from "../../utils/interfaces.ts";
 
 
 export const StampCardsTab = () => {
@@ -20,7 +21,7 @@ export const StampCardsTab = () => {
     const [isClientDialogVisible, setIsClientDialogVisible] = useState(false);
 
     const [searchQuery, setSearchQuery] = useState("");
-    const [sortField, setSortField] = useState<keyof typeof stampCards[0] | null>(null);
+    const [sortField, setSortField] = useState<keyof StampCardInterface>("clientId");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
     const filteredStampCards = stampCards.filter(stampCard =>

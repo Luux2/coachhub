@@ -2,6 +2,9 @@ import {Helmet} from "react-helmet-async";
 import ExcelUploader, {ClientRow} from "../misc/ExcelUploader.tsx";
 import ClientService from "../../services/ClientService.tsx";
 import useClients from "../../hooks/useClients.ts";
+import ContactsUploader from "../misc/ContactsUploader.tsx";
+import {ContactInterface} from "../../utils/interfaces.ts";
+import ContactService from "../../services/ContactService.tsx";
 
 export const ImportTab = () => {
 
@@ -30,6 +33,19 @@ export const ImportTab = () => {
         }
     };
 
+    const handleContactsAdded = async (newContacts: ContactInterface[]) => {
+        try {
+            for (const contact of newContacts) {
+                await ContactService.createContact(contact);
+            }
+            alert("Kontaktpersoner tilføjet");
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+            alert("Der skete en fejl ved tilføjelse af kontaktpersoner");
+        }
+    };
+
     return (
         <>
             <Helmet>
@@ -40,6 +56,7 @@ export const ImportTab = () => {
 
         <div className="w-full rounded-xl mx-16 h-96 flex flex-col items-center justify-center">
             <ExcelUploader onClientsAdded={handleClientsAdded}/>
+            <ContactsUploader onContactsAdded={handleContactsAdded}/>
         </div>
         </>
     );

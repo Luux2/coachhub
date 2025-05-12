@@ -9,6 +9,7 @@ import EditClientDialog from "../../../components/clientProfile/EditClientDialog
 import {useState} from "react";
 import ClientService from "../../../services/ClientService.tsx";
 import CreateNoteForClientForm from "../../../components/clientProfile/CreateNoteForClientForm.tsx";
+import BackArrow from "../../../components/misc/BackArrow.tsx";
 
 
 export const ClientProfileScreen = () => {
@@ -72,7 +73,8 @@ export const ClientProfileScreen = () => {
                 <Header />
 
                 <div className="mx-40">
-                        <div className="flow-root my-20 border-2 rounded-xl shadow-lg bg-white">
+                    <BackArrow />
+                        <div className="flow-root my-5 border-2 rounded-xl shadow-lg bg-white">
                             <div className="flex justify-between px-2 p-2 border-b-2 border-gray-500">
                                 <h1 className="font-bold text-3xl">{client?.companyName}</h1>
                                 <div className="flex items-center">
