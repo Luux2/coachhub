@@ -113,7 +113,7 @@ export const ClientsTab = () => {
                         {sortedClients.length > 0 ? (
                             sortedClients.map((client) => (
                                 <tr
-                                    onClick={() => navigate(`/kunder/${client.id}/klippekort`)}
+                                    onClick={() => navigate(`/kunder/${client.id}/kontaktpersoner`)}
                                     key={client.id}
                                     className="hover:bg-teal-600 transition-colors duration-500 cursor-pointer"
                                 >

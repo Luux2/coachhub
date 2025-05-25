@@ -13,12 +13,12 @@ export const EditClientDialog = ({onClose, client, clientId}: {
         companyName: "",
         address: "",
         city: "",
-        zipCode: 0,
-        cvr: 0,
+        zipCode: "",
+        cvr: "",
         status: "",
         responsible: "",
         activityStatus: "",
-        phone: 0,
+        phone: "",
         stampCardIds: [],
         contactIds: [],
         notes: [],
@@ -31,7 +31,11 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                 stampCardIds: client.stampCardIds ?? [],
                 contactIds: client.contactIds ?? [],
                 notes: client.notes ?? [],
+                phone: client.phone === 0 ? "" : client.phone,
+                zipCode: client.zipCode === 0 ? "" : client.zipCode,
+                cvr: client.cvr === 0 ? "" : client.cvr,
             });
+
         }
     }, [client]);
 
@@ -85,7 +89,10 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                         <input
                             className="w-full rounded-lg border-gray-200 p-3 text-sm"
                             placeholder="CVR-nummer"
-                            type="number"
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            maxLength={8}
                             value={clientData.cvr}
                             id="cvr"
                             onChange={handleChange}
@@ -107,7 +114,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                             placeholder="Adresse"
                             type="text"
                             value={clientData.address ?? ""}
-                            id="adresse"
+                            id="address"
                             onChange={handleChange}
                         />
 
@@ -117,7 +124,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                             placeholder="By"
                             type="text"
                             value={clientData.city ?? ""}
-                            id="by"
+                            id="city"
                             onChange={handleChange}
                         />
 
@@ -125,9 +132,12 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                         <input
                             className="w-full rounded-lg border-gray-200 p-3 text-sm"
                             placeholder="Postnummer"
-                            type="number"
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            maxLength={4}
                             value={clientData.zipCode ?? ""}
-                            id="postnummer"
+                            id="zipCode"
                             onChange={handleChange}
                         />
                     </div>
@@ -151,8 +161,11 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                                 className="w-full rounded-lg border-gray-200 p-3 pl-12 text-sm"
                                 placeholder="Telefonnummer"
                                 type="tel"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
+                                maxLength={8}
                                 value={clientData.phone ?? ""}
-                                id="telefonnummer"
+                                id="phone"
                                 onChange={handleChange}
                             />
                         </div>

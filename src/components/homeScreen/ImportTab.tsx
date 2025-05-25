@@ -56,7 +56,16 @@ export const ImportTab = () => {
 
         <div className="w-full rounded-xl mx-16 h-96 flex flex-col items-center justify-center">
             <ExcelUploader onClientsAdded={handleClientsAdded}/>
+            <div className="text-center">
+                <h1>Kolonnerne fra venstre mod højre:</h1>
+                <h1 className="font-semibold">Virksomhedsnavn, Status, Adresse, Ansvarlig</h1>
+            </div>
+
             <ContactsUploader onContactsAdded={handleContactsAdded}/>
+            <div className="text-center">
+                <h1>Kolonnerne fra venstre mod højre:</h1>
+                <h1 className="font-semibold">Virksomhedsnavn, Navn, Titel, Email, Telefonnummer</h1>
+            </div>
         </div>
         </>
     );

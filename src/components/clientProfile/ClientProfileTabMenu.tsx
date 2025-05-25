@@ -10,18 +10,6 @@ export const ClientProfileTabMenu = () => {
             <div className="block">
                 <div className="border-b border-gray-200">
                     <nav className="-mb-px flex gap-6" aria-label="Tabs">
-                        {/* Klippekort Tab */}
-                        <NavLink
-                            to={`/kunder/${clientId}/klippekort`}
-                            className={`inline-flex shrink-0 items-center gap-2 border-b-2 px-1 pb-4 text-sm font-medium
-                                ${location.pathname.includes("klippekort")
-                                ? "border-teal-500 text-teal-600"
-                                : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"}
-                            `}
-                        >
-                            <TicketIcon className={`size-5 ${location.pathname.includes("klippekort") ? "text-teal-600" : "text-gray-400"}`} />
-                            Klippekort
-                        </NavLink>
 
                         {/* Kontaktpersoner Tab */}
                         <NavLink
@@ -35,6 +23,21 @@ export const ClientProfileTabMenu = () => {
                             <UsersIcon className={`size-5 ${location.pathname.includes("kontaktpersoner") ? "text-teal-600" : "text-gray-400"}`} />
                             Kontaktpersoner
                         </NavLink>
+
+                        {/* Klippekort Tab */}
+                        <NavLink
+                            to={`/kunder/${clientId}/klippekort`}
+                            className={`inline-flex shrink-0 items-center gap-2 border-b-2 px-1 pb-4 text-sm font-medium
+                                ${location.pathname.includes("klippekort")
+                                ? "border-teal-500 text-teal-600"
+                                : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700"}
+                            `}
+                        >
+                            <TicketIcon className={`size-5 ${location.pathname.includes("klippekort") ? "text-teal-600" : "text-gray-400"}`} />
+                            Klippekort
+                        </NavLink>
+
+
                         <NavLink
                             to={`/kunder/${clientId}/noter`}
                             className={`inline-flex shrink-0 items-center gap-2 border-b-2 px-1 pb-4 text-sm font-medium

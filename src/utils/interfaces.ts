@@ -10,12 +10,12 @@ export interface ClientInterface {
     companyName: string;
     address: string;
     city: string;
-    zipCode: number;
-    cvr: number;
+    zipCode: number | "";
+    cvr: number | "";
     status: string;
     responsible: string;
     activityStatus: string;
-    phone: number;
+    phone: number | "";
     stampCardIds?: string[];
     contactIds?: string[];
     notes?: NoteInterface[];

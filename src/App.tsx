@@ -46,9 +46,9 @@ function App() {
 
 
                                 <Route path="/kunder/:clientId" element={<ProtectedRoute> <ClientProfileScreen/> </ProtectedRoute>}>
-                                    <Route index element={<Navigate to="/klippekort" replace/>}/>
-                                    <Route path="klippekort" element={<ClientProfileStampTab/>}/>
+                                    <Route index element={<Navigate to="/kontaktpersoner" replace/>}/>
                                     <Route path="kontaktpersoner" element={<ClientProfileContactsTab/>}/>
+                                    <Route path="klippekort" element={<ClientProfileStampTab/>}/>
                                     <Route path="noter" element={<ClientProfileNotesTab/>}/>
                                 </Route>
 
