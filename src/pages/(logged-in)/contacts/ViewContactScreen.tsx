@@ -105,24 +105,19 @@ export const ViewContactScreen = () => {
 
                             <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
                                 <dt className="font-bold text-gray-900">Mail</dt>
-
+                                <div>
                                 <a href={`mailto:${contact?.mail}`} title={"Tryk for at sende en mail"}>
                                 <dd className="text-teal-700 sm:col-span-2">{contact?.mail}</dd>
                                 </a>
-                            </div>
-
-                            <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-                                <dt className="font-bold text-gray-900">LinkedIn</dt>
                                 <a
-                                    href={contact?.socialMedia?.linkedin?.startsWith("http")
-                                        ? contact.socialMedia.linkedin
-                                        : `https://${contact?.socialMedia?.linkedin}`}
-                                    title="Tryk for at besøge LinkedIn"
+                                    href={`https://outlook.office.com/calendar/0/deeplink/compose?subject=Møde&to=${contact?.mail}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    title="Tryk for at oprette møde i Outlook"
                                 >
-                                    <dd className="text-teal-700 sm:col-span-2">{contact?.socialMedia?.linkedin}</dd>
+                                    <dd className={`${contact?.mail ? "text-teal-700" : "hidden"}`}>Opret møde</dd>
                                 </a>
+                                </div>
                             </div>
 
                             <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4 items-center">
