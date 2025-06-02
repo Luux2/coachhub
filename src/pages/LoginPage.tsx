@@ -38,7 +38,6 @@ export const LoginPage = () => {
         return () => unsubscribe();
     }, [navigate]);
 
-
     return (
         <>
             <Helmet>
