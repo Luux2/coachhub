@@ -42,13 +42,13 @@ export const ClientProfileNotesTab = () => {
     return (
         <>
 
-            <div className={`${!deleteWarningVisible ? "hidden" : ""} fixed inset-0 z-10 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+            <div className={`${!deleteWarningVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <DeleteWarning onClose={() => setDeleteWarningVisible(false)} onDelete={handleDelete} type={"note"}/>
             </div>
 
 
         <div
-            className={`${!editNoteDialogVisible ? "hidden" : ""} fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-90`}>
+            className={`${!editNoteDialogVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
             <EditNoteDialog note={selectedNote!}
                                  onClose={() => {
                                      setEditNoteDialogVisible(false);

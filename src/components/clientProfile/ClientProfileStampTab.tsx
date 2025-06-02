@@ -63,7 +63,7 @@ export const ClientProfileStampTab = () => {
     return (
         <div className="overflow-y-visible">
             <div
-                className={`${!registerStampsDialogVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!registerStampsDialogVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <RegisterStampsDialog stampCard={selectedStampCard!}
                                       onClose={() => {
                                           setRegisterStampsDialogVisible(false);
@@ -76,7 +76,7 @@ export const ClientProfileStampTab = () => {
             </div>
 
             <div
-                className={`${!editStampCardDialogVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!editStampCardDialogVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <EditStampCardDialog stampCard={selectedStampCard!}
                                      onClose={() => {
                                          setEditStampCardDialogVisible(false);
@@ -85,7 +85,7 @@ export const ClientProfileStampTab = () => {
             </div>
 
             <div
-                className={`${!deleteWarningVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!deleteWarningVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <DeleteWarning onClose={() => setDeleteWarningVisible(false)} onDelete={handleDelete} type="klippekort"/>
             </div>
 

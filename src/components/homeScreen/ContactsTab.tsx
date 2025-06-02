@@ -65,7 +65,7 @@ export const ContactsTab = () => {
             </Helmet>
 
             <div
-                className={`${!isClientDialogVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!isClientDialogVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <ChooseClientDialog clients={clients} onClose={() => setIsClientDialogVisible(false)} onSubmit={(selectedClientId) => {
                     setIsClientDialogVisible(false);
                     navigate(`/${selectedClientId}/opretkontaktperson`);

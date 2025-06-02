@@ -51,7 +51,7 @@ export const ViewStampCardScreen = () => {
         <>
 
             <div
-                className={`${!registerStampsDialogVisible ? "hidden" : ""} min-h-screen -mt-20 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!registerStampsDialogVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <RegisterStampsDialog stampCard={selectedStampCard!}
                                       onClose={() => {
                                           setRegisterStampsDialogVisible(false);
@@ -65,7 +65,7 @@ export const ViewStampCardScreen = () => {
             </div>
 
             <div
-                className={`${!editStampsDialogVisible ? "hidden" : ""} min-h-screen -mt-20 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!editStampsDialogVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <EditStampsDialog
                     stampCard={selectedStampCard!}
                     onClose={() => setEditStampsDialogVisible(false)}
@@ -81,7 +81,7 @@ export const ViewStampCardScreen = () => {
             </div>
 
             <div
-                className={`${!deleteWarningVisible ? "hidden" : ""} min-h-screen -mt-2 fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!deleteWarningVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <DeleteWarning onClose={() => setDeleteWarningVisible(false)} onDelete={handleDelete} type="klippekort"/>
             </div>
 
