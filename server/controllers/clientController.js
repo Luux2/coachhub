@@ -31,6 +31,12 @@ const getClientById = async (req, res) => {
     });
 };
 
+const deleteClient = async (req, res) => {
+    const ref = db.ref(`/clients/${req.params.id}`);
+    await ref.remove();
+    res.json({message: 'Client deleted'});
+}
+
 
 const postClient = async (req, res) => {
     const ref = db.ref('/clients');
@@ -75,4 +81,4 @@ const deleteNote = async (req, res) => {
 
 
 
-module.exports = {getClients, getClientById, postClient, patchClient, postNote, patchNote, deleteNote};
+module.exports = {getClients, getClientById, deleteClient, postClient, patchClient, postNote, patchNote, deleteNote};

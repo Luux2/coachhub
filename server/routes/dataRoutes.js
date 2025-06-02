@@ -12,6 +12,7 @@ router.get('/users', userController.getUsers);
 // Client routes
 router.get('/clients', clientController.getClients);
 router.get('/clients/:id', clientController.getClientById);
+router.delete('/clients/:id', clientController.deleteClient);
 router.post('/clients', clientController.postClient);
 router.patch('/clients/:id', clientController.patchClient);
 router.post('/clients/:id/notes', clientController.postNote);

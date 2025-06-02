@@ -10,6 +10,7 @@ import {useState} from "react";
 import ClientService from "../../../services/ClientService.tsx";
 import CreateNoteForClientForm from "../../../components/clientProfile/CreateNoteForClientForm.tsx";
 import BackArrow from "../../../components/misc/BackArrow.tsx";
+import DeleteWarning from "../../../components/stampCard/DeleteWarning.tsx";
 
 
 export const ClientProfileScreen = () => {
@@ -21,6 +22,8 @@ export const ClientProfileScreen = () => {
     const isLoading = clientLoading;
     const error = clientError;
 
+    const [deleteContactWarningVisible, setDeleteContactWarningVisible] = useState(false);
+
     const [editClientDialogVisible, setEditClientDialogVisible] = useState(false);
     const [createNoteDialogVisible, setCreateNoteDialogVisible] = useState(false);
 
@@ -29,6 +32,15 @@ export const ClientProfileScreen = () => {
         setClient(updatedClient);
     };
 
+    const handleDeleteClient = async () => {
+        if (!client || !clientId) {
+            return alert("Kunden kunne ikke findes. Prøv at genindlæse siden.");
+        }
+        await ClientService.deleteClient(clientId);
+        setDeleteContactWarningVisible(false);
+        fetchClient().then();
+        navigate("/kunder");
+    }
 
 
 
@@ -67,6 +79,11 @@ export const ClientProfileScreen = () => {
                 }}/>
             </div>
 
+            <div
+                className={`${!deleteContactWarningVisible ? "hidden" : ""} fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                <DeleteWarning onClose={() => setDeleteContactWarningVisible(false)} onDelete={handleDeleteClient} type="kunde"/>
+            </div>
+
 
 
             <Animation>
@@ -77,9 +94,15 @@ export const ClientProfileScreen = () => {
                         <div className="flow-root my-5 border-2 rounded-xl shadow-lg bg-white">
                             <div className="flex justify-between px-2 p-2 border-b-2 border-gray-500">
                                 <h1 className="font-bold text-3xl">{client?.companyName}</h1>
-                                <div className="flex items-center">
+                                <div className="flex items-start gap-4">
                                     <button onClick={() => setEditClientDialogVisible(true)}
                                             className="bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white px-4 rounded-md w-40 py-2">Rediger
+                                    </button>
+
+                                    <button onClick={() => {
+                                        setDeleteContactWarningVisible(true);
+                                    }}
+                                            className="bg-red-600 hover:bg-red-700 transition-colors duration-300 text-white px-4 rounded-md w-40 py-2">Slet
                                     </button>
                                 </div>
                             </div>
