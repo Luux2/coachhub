@@ -84,7 +84,7 @@ export const ClientsTab = () => {
                                 Virksomhed {sortField === "companyName" && (sortDirection === "asc" ? "🔼" : "🔽")}
                             </th>
                             <th
-                                className="px-4 py-2 text-gray-900 cursor-pointer select-none"
+                                className="px-4 py-2 text-gray-900 cursor-pointer select-none w-[25%]"
                                 onClick={() => handleSort("city")}
                             >
                                 By {sortField === "city" && (sortDirection === "asc" ? "🔼" : "🔽")}

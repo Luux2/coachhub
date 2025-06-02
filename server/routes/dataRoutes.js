@@ -28,6 +28,7 @@ router.patch('/contacts/:id', contactController.patchContact);
 router.delete('/contacts/:id', contactController.deleteContact);
 router.post('/contacts/:id/notes', contactController.postNote);
 router.delete('/contacts/:id/notes/:noteId', contactController.deleteNote);
+router.patch('/contacts/:id/notes/:noteId', contactController.updateNote);
 
 // Stamp card routes
 router.get('/stampcards', stampCardController.getStampCards);

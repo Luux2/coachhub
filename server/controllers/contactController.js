@@ -75,5 +75,11 @@ const deleteNote = async (req, res) => {
     res.json({message: 'Note deleted'});
 }
 
+const updateNote = async (req, res) => {
+    const ref = db.ref(`/contacts/${req.params.id}/notes/${req.params.noteId}`);
+    await ref.update(req.body);
+    res.json({message: 'Note updated'});
+}
 
-module.exports = {getContacts, getContactById, getContactsByClientId, postContact, patchContact, deleteContact, postNote, deleteNote};
+
+module.exports = {getContacts, getContactById, getContactsByClientId, postContact, patchContact, deleteContact, postNote, deleteNote, updateNote};

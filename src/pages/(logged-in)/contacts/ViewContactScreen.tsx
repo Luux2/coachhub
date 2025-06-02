@@ -16,6 +16,7 @@ import DeleteWarning from "../../../components/stampCard/DeleteWarning.tsx";
 import CreateNoteForm from "../../../components/note/CreateNoteForm.tsx";
 import BackArrow from "../../../components/misc/BackArrow.tsx";
 import useClients from "../../../hooks/useClients.ts";
+import EditContactNoteDialog from "../../../components/note/EditContactNoteDialog.tsx";
 
 export const ViewContactScreen = () => {
     const { contactId } = useParams();
@@ -30,6 +31,7 @@ export const ViewContactScreen = () => {
     const [deleteNoteWarningVisible, setDeleteNoteWarningVisible] = useState(false);
     const [deleteContactWarningVisible, setDeleteContactWarningVisible] = useState(false);
     const [createNoteDialogVisible, setCreateNoteDialogVisible] = useState(false);
+    const [editNoteDialogVisible, setEditNoteDialogVisible] = useState(false);
 
 
     if (contactLoading) {
@@ -96,6 +98,15 @@ export const ViewContactScreen = () => {
                 <CreateNoteForm onClose={() => setCreateNoteDialogVisible(false)} contactId={selectedContact?.id || ""} onCreate={fetchContact}/>
             </div>
 
+            <div
+                className={`${!editNoteDialogVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                <EditContactNoteDialog note={selectedNote!}
+                                onClose={() => {
+                                    setEditNoteDialogVisible(false);
+                                    fetchContact().then();
+                                }} contactId={contactId!} noteId={selectedNote?.id || ''}/>
+            </div>
+
             <Animation>
                 <Header />
 
@@ -105,7 +116,6 @@ export const ViewContactScreen = () => {
                         <div className="flex justify-between px-2 p-2 border-b-2 border-gray-500">
                             <div className="flex flex-col gap-1">
                                 <h1 className="font-bold text-3xl">{contact?.name}</h1>
-                                <h1 className="text-xl italic">{contact && getCompanyName(contact.clientId)}</h1>
                             </div>
                             <div className="flex items-start gap-4">
                                 <button onClick={() => {
@@ -127,7 +137,12 @@ export const ViewContactScreen = () => {
                         <dl className="divide-y divide-gray-100 text-md px-2">
 
                             <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
-                                <dt className="font-bold text-gray-900">Titel/Stilling</dt>
+                                <dt className="font-bold text-gray-900">Virksomhed</dt>
+                                <dd className="text-gray-700 sm:col-span-2">{contact?.clientId ? getCompanyName(contact.clientId) : "Privat"}</dd>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                                <dt className="font-bold text-gray-900">Titel</dt>
                                 <dd className="text-gray-700 sm:col-span-2">{contact?.title}</dd>
                             </div>
 
@@ -142,6 +157,11 @@ export const ViewContactScreen = () => {
                                 <a href={`mailto:${contact?.mail}`} title={"Tryk for at sende en mail"}>
                                 <dd className="text-teal-700 sm:col-span-2">{contact?.mail}</dd>
                                 </a>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+                                <dt className="font-bold text-gray-900">Kalenderaftale</dt>
                                 <a
                                     href={`https://outlook.office.com/calendar/0/deeplink/compose?subject=Møde&to=${contact?.mail}`}
                                     target="_blank"
@@ -150,7 +170,6 @@ export const ViewContactScreen = () => {
                                 >
                                     <dd className={`${contact?.mail ? "text-teal-700" : "hidden"}`}>Opret møde</dd>
                                 </a>
-                                </div>
                             </div>
 
                             <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4 items-center">
@@ -216,9 +235,9 @@ export const ViewContactScreen = () => {
                         <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
                             <thead className="text-left">
                             <tr>
-                                <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">Note</th>
-                                <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900 w-[16%]">Dato</th>
-                                <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900 w-[8%]">Handlinger</th>
+                                <th className="px-4 py-2 font-bold text-gray-900">Note</th>
+                                <th className="px-4 py-2 font-bold text-gray-900 w-[16%]">Dato</th>
+                                <th className="px-4 py-2 font-bold text-gray-900 w-[8%]">Handlinger</th>
 
                             </tr>
                             </thead>
@@ -226,14 +245,23 @@ export const ViewContactScreen = () => {
                             <tbody className="divide-y divide-gray-200">
                             {Object.entries(contact?.notes ?? {}).sort(([, a], [, b]) => new Date(b.dateTime).getTime() - new Date(a.dateTime).getTime()).map(([key, note]) => (
                                 <tr key={key} className="transition duration-300">
-                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                        {note.body}
+                                    <td className="break-words px-4 py-2 font-medium text-gray-900">
+                                        <h1 className="w-[calc(100vh-300px)]">{note.body}</h1>
                                     </td>
-                                    <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    <td className="px-4 py-2 font-medium text-gray-900">
                                         {format(note.dateTime, "dd. MMMM yyyy", { locale: da })}
                                     </td>
 
-                                    <td className="flex gap-3 whitespace-nowrap px-4 py-2 text-gray-700">
+                                    <td className="flex gap-3 px-4 py-2 text-gray-700">
+
+                                        <button onClick={() => {
+                                            setSelectedNote({...note, id: key });
+                                            setEditNoteDialogVisible(true);
+                                        }} className="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 transition-colors duration-300 flex gap-2">
+                                            <PencilSquareIcon className="h-5" />
+                                            <p>Rediger</p>
+                                        </button>
+
                                         <button
                                             onClick={() => {
                                                 setSelectedNote({...note, id: key});

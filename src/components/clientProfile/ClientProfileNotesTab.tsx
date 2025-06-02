@@ -60,9 +60,9 @@ export const ClientProfileNotesTab = () => {
             <table className="min-w-full divide-y-2 divide-gray-200 bg-white text-md">
                 <thead className="text-left">
                 <tr>
-                    <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">Note</th>
-                    <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">Dato</th>
-                    <th className="whitespace-nowrap px-4 py-2 font-bold text-gray-900">Handlinger</th>
+                    <th className="px-4 py-2 font-bold text-gray-900">Note</th>
+                    <th className="px-4 py-2 font-bold text-gray-900">Dato</th>
+                    <th className="px-4 py-2 font-bold text-gray-900">Handlinger</th>
 
                 </tr>
                 </thead>
@@ -70,15 +70,15 @@ export const ClientProfileNotesTab = () => {
                 <tbody className="divide-y divide-gray-200">
                 {Object.entries(client?.notes ?? {}).map(([key, note]) => (
                     <tr key={key} className="hover:bg-teal-600 transition duration-300">
-                        <td className="w-[70%] whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                            {note.body}
+                        <td className="break-words px-4 py-2 font-medium text-gray-900">
+                            <h1 className="w-[calc(100vh-300px)]">{note.body}</h1>
                         </td>
 
-                        <td className="w-[30%] whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                        <td className="w-[30%] px-4 py-2 font-medium text-gray-900">
                             {format(note.dateTime, "dd. MMMM yyyy", {locale: da})}
                         </td>
 
-                        <td className="flex gap-3 whitespace-nowrap px-4 py-2 text-gray-700">
+                        <td className="flex gap-3 px-4 py-2 text-gray-700">
                             <button onClick={() => {
                                 setSelectedNote({...note, id: key });
                                 setEditNoteDialogVisible(true);

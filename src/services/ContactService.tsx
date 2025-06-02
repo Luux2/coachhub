@@ -38,6 +38,10 @@ class ContactService {
         await apiClient.delete(`/contacts/${contactId}/notes/${noteId}`);
     }
 
+    static async updateNote(note: NoteInterface, contactId: string, noteId: string): Promise<void> {
+        await apiClient.patch(`/contacts/${contactId}/notes/${noteId}`, note);
+    }
+
 }
 
 export default ContactService;
