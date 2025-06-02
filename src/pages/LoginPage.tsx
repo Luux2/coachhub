@@ -25,7 +25,6 @@ export const LoginPage = () => {
         }
     };
 
-
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             if (user) {
