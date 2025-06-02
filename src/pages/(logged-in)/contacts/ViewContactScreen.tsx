@@ -2,7 +2,7 @@ import {Helmet} from "react-helmet-async";
 import useSingleContact from "../../../hooks/useSingleContact.ts";
 import Animation from "../../../components/misc/Animation.tsx";
 import Header from "../../../components/misc/Header.tsx";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import LoadingBar from "../../../components/misc/LoadingBar.tsx";
 import {format} from "date-fns";
 import {da} from "date-fns/locale";
@@ -15,16 +15,20 @@ import {SocialIcon} from "react-social-icons";
 import DeleteWarning from "../../../components/stampCard/DeleteWarning.tsx";
 import CreateNoteForm from "../../../components/note/CreateNoteForm.tsx";
 import BackArrow from "../../../components/misc/BackArrow.tsx";
+import useClients from "../../../hooks/useClients.ts";
 
 export const ViewContactScreen = () => {
     const { contactId } = useParams();
+    const navigate = useNavigate();
 
     const {setContact, contact, loading: contactLoading, error: contactError} = useSingleContact(contactId);
+    const { clients } = useClients();
     const [editContactDialogVisible, setEditContactDialogVisible] = useState(false);
     const [selectedContact, setSelectedContact] = useState<ContactInterface | null>(null);
     const [selectedNote, setSelectedNote] = useState<NoteInterface | null>(null);
 
-    const [deleteWarningVisible, setDeleteWarningVisible] = useState(false);
+    const [deleteNoteWarningVisible, setDeleteNoteWarningVisible] = useState(false);
+    const [deleteContactWarningVisible, setDeleteContactWarningVisible] = useState(false);
     const [createNoteDialogVisible, setCreateNoteDialogVisible] = useState(false);
 
 
@@ -41,10 +45,25 @@ export const ViewContactScreen = () => {
         setContact(updatedContact);
     }
 
-    const handleDelete = async () => {
+    const handleDeleteNote = async () => {
         await ContactService.deleteNote(contactId!, selectedNote!.id!);
-        setDeleteWarningVisible(false);
+        setDeleteNoteWarningVisible(false);
         fetchContact().then();
+    }
+
+    const handleDeleteContact = async () => {
+        if (!selectedContact || !selectedContact.id) {
+            return alert("Kontakten kunne ikke findes. Prøv at genindlæse siden.");
+        }
+        await ContactService.deleteContact(selectedContact.id);
+        setDeleteContactWarningVisible(false);
+        fetchContact().then();
+        navigate("/kontaktpersoner");
+    }
+
+    const getCompanyName = (clientId: string) => {
+        const client = clients.find((client) => client.id === clientId);
+        return client ? client.companyName : "Privat";
     }
 
 
@@ -64,8 +83,13 @@ export const ViewContactScreen = () => {
             </div>
 
             <div
-                className={`${!deleteWarningVisible ? "hidden" : ""} fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
-                <DeleteWarning onClose={() => setDeleteWarningVisible(false)} onDelete={handleDelete} type="note"/>
+                className={`${!deleteNoteWarningVisible ? "hidden" : ""} fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                <DeleteWarning onClose={() => setDeleteNoteWarningVisible(false)} onDelete={handleDeleteNote} type="note"/>
+            </div>
+
+            <div
+                className={`${!deleteContactWarningVisible ? "hidden" : ""} fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                <DeleteWarning onClose={() => setDeleteContactWarningVisible(false)} onDelete={handleDeleteContact} type="kontakt"/>
             </div>
 
             <div className={`${!createNoteDialogVisible ? "hidden" : ""} fixed inset-0 z-10 flex items-center justify-center bg-gray-500 bg-opacity-90`}>
@@ -79,13 +103,22 @@ export const ViewContactScreen = () => {
                     <BackArrow />
                     <div className="flow-root my-5 border-2 rounded-xl shadow-lg bg-white">
                         <div className="flex justify-between px-2 p-2 border-b-2 border-gray-500">
-                            <h1 className="font-bold text-3xl">{contact?.name}</h1>
-                            <div className="flex items-center">
+                            <div className="flex flex-col gap-1">
+                                <h1 className="font-bold text-3xl">{contact?.name}</h1>
+                                <h1 className="text-xl italic">{contact && getCompanyName(contact.clientId)}</h1>
+                            </div>
+                            <div className="flex items-start gap-4">
                                 <button onClick={() => {
                                     setSelectedContact(contact);
                                     setEditContactDialogVisible(true);
                                 }}
                                         className="bg-teal-600 hover:bg-teal-700 transition-colors duration-300 text-white px-4 rounded-md w-40 py-2">Rediger
+                                </button>
+                                <button onClick={() => {
+                                    setSelectedContact(contact);
+                                    setDeleteContactWarningVisible(true);
+                                }}
+                                        className="bg-red-600 hover:bg-red-700 transition-colors duration-300 text-white px-4 rounded-md w-40 py-2">Slet
                                 </button>
                             </div>
                         </div>
@@ -204,7 +237,7 @@ export const ViewContactScreen = () => {
                                         <button
                                             onClick={() => {
                                                 setSelectedNote({...note, id: key});
-                                                setDeleteWarningVisible(true);
+                                                setDeleteNoteWarningVisible(true);
                                             }}
                                             className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors duration-300 flex gap-2">
                                             <PencilSquareIcon className="h-5" />

@@ -27,7 +27,7 @@ export const CreateContactScreen = () => {
 
                 <div className="mx-60">
                     <BackArrow />
-                <h1 className="text-3xl font-extrabold mb-5">Opret ny kontaktperson {client?.companyName ? `for ${client.companyName}` : ""}</h1>
+                <h1 className="text-3xl font-extrabold mb-5">Opret ny kontaktperson {client?.companyName ? `for ${client.companyName}` : "(privat)"}</h1>
 
 
                 <CreateContactForm/>

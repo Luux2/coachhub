@@ -22,9 +22,9 @@ export const CreateContactForm = () => {
             title: title
         }
 
-        if (!name || !email || !phone) {
+        if (!name) {
             return (
-                alert("Udfyld venligst alle felter.")
+                alert("Angiv venligst navn på kontaktperson.")
             );
         }
 

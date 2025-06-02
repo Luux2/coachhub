@@ -1,12 +1,15 @@
 import {ContactInterface} from "../../utils/interfaces.ts";
 import {FormEvent, useEffect, useState} from "react";
 import ContactService from "../../services/ContactService.tsx";
+import useClients from "../../hooks/useClients.ts";
 
 export const EditContactDialog = ({onClose, contact, contactId}: {
     onClose: () => void;
     contact?: ContactInterface;
     contactId: string;
 }) => {
+
+    const { clients } = useClients();
 
     const [name, setName] = useState(contact?.name || "");
     const [title, setTitle] = useState(contact?.title || "");
@@ -55,6 +58,7 @@ export const EditContactDialog = ({onClose, contact, contactId}: {
         onClose();
     }
 
+
     return (
         <div className="overflow-hidden rounded-lg shadow-2xl bg-white p-4 w-5/6">
             <p className="font-bold text-black text-4xl text-center">
@@ -62,6 +66,26 @@ export const EditContactDialog = ({onClose, contact, contactId}: {
             </p>
             <div className="flex justify-center items-center rounded-lg bg-white p-12">
                 <form className="space-y-4 w-full" onSubmit={handleUpdateContact}>
+
+                    <div className="grid grid-cols-1">
+                        <div>
+                            <label className="text-sm ml-1" htmlFor="clientId">Virksomhed</label>
+                            <select
+                                className="w-full rounded-lg border-gray-200 p-3 text-sm"
+                                id="clientId"
+                                value={clientId}
+                                onChange={(e) => setClientId(e.target.value)}
+                            >
+                                <option value="" disabled>Vælg en virksomhed</option>
+                                <option value="Privat">Ingen virksomhed (privat)</option>
+                                {clients.sort((a, b) => a.companyName.localeCompare(b.companyName)).map((client) => (
+                                    <option key={client.id} value={client.id}>
+                                        {client.companyName}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    </div>
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
@@ -72,7 +96,6 @@ export const EditContactDialog = ({onClose, contact, contactId}: {
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            required
                         />
                         </div>
 
@@ -84,7 +107,6 @@ export const EditContactDialog = ({onClose, contact, contactId}: {
                             id="titel"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
-                            required
                         />
                         </div>
                     </div>
@@ -100,7 +122,6 @@ export const EditContactDialog = ({onClose, contact, contactId}: {
                             id="telefonnummer"
                             value={phone}
                             onChange={(e) => setPhone(e.target.value)}
-                            required
                         />
                         </div>
 
@@ -114,7 +135,6 @@ export const EditContactDialog = ({onClose, contact, contactId}: {
                                 id="mail"
                                 value={mail}
                                 onChange={(e) => setMail(e.target.value)}
-                                required
                             />
                         </div>
                     </div>

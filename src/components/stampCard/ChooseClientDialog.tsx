@@ -27,7 +27,9 @@ export const ChooseClientDialog = ({onClose, onSubmit, clients}: {
                     onChange={(e) => setSelectedClientId(e.target.value)}
                 >
                     <option disabled value="">Vælg en kunde</option>
-                    <option value="none">Ingen virksomhed</option>
+                    {window.location.pathname.includes("kontaktpersoner") && (
+                    <option value="Privat">Ingen virksomhed (privat)</option>
+                    )}
                 {sortedClients.map((client) => (
                     <option key={client.id} value={client.id}>
                         {client.companyName}
