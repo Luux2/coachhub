@@ -154,6 +154,8 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                             <option value="Leverandør">Leverandør</option>
                             <option value="Kampagne">Kampagne</option>
                             <option value="Cold Lead">Cold Lead</option>
+                            <option value="Akademiforløb - Kunde">Akademiforløb - Kunde</option>
+                            <option value="Akademiforløb - Emne">Akademiforløb - Emne</option>
                         </select>
 
                         <div className="relative">
