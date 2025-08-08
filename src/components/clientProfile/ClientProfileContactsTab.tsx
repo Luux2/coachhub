@@ -90,6 +90,7 @@ export const ClientProfileContactsTab = () => {
                                     <a
                                         className="text-teal-700 hover:underline"
                                         href={`mailto:${contact.mail}`}
+                                        onClick={(e) => e.stopPropagation()}
                                     >
                                         {contact.mail}
                                     </a>

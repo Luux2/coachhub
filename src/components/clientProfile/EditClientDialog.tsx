@@ -99,7 +99,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                         />
 
                         <select className="w-full rounded-lg border-gray-200 p-3 text-sm" id="activityStatus"
-                                onChange={handleChange} defaultValue={clientData.activityStatus}
+                                onChange={handleChange} value={clientData.activityStatus}
                         >
                             <option value="Aktiv">Aktiv</option>
                             <option value="Tilbudsfase">Tilbudsfase</option>
@@ -145,7 +145,7 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                     <div className="grid grid-cols-2 gap-4">
                         <label className="sr-only" htmlFor="status">Status</label>
                         <select className="w-full rounded-lg border-gray-200 p-3 text-sm" id="status"
-                                onChange={handleChange} defaultValue={clientData.status}
+                                onChange={handleChange} value={clientData.status}
                         >
                             <option value="Akademiforløb - Emne">Akademiforløb - Emne</option>
                             <option value="Akademiforløb - Kunde">Akademiforløb - Kunde</option>
