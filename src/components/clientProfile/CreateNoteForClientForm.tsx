@@ -45,7 +45,7 @@ export const CreateNoteForClientForm = ({onClose, clientId, onCreate}: {
     }
 
     return (
-        <div className="overflow-hidden rounded-lg shadow-2xl bg-white p-4">
+        <div className="overflow-hidden rounded-lg shadow-2xl bg-white p-4 w-1/2">
             <p className="font-bold text-black text-4xl text-center">
                 Opret note
             </p>
@@ -53,11 +53,11 @@ export const CreateNoteForClientForm = ({onClose, clientId, onCreate}: {
                 <form className="space-y-4 w-full" onSubmit={handleCreateNote}>
 
                     <div>
-                        <label className="text-sm ml-1" htmlFor="note">
+                        <label className="font-bold text-xl ml-1" htmlFor="note">
                             Note
                         </label>
                         <textarea
-                            className="w-full rounded-lg border-gray-200 text-sm resize-none max-h-32"
+                            className="w-full rounded-lg border-gray-500 text-sm resize-none size-48"
                             id="note"
                             value={body}
                             onChange={(e) => setBody(e.target.value)}

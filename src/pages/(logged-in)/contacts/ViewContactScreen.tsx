@@ -99,7 +99,7 @@ export const ViewContactScreen = () => {
             </div>
 
             <div
-                className={`${!editNoteDialogVisible ? "hidden" : ""} min-h-screen fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
+                className={`${!editNoteDialogVisible ? "hidden" : ""} fixed inset-0 z-50 bg-gray-500 bg-opacity-90 flex items-center justify-center`}>
                 <EditContactNoteDialog note={selectedNote!}
                                 onClose={() => {
                                     setEditNoteDialogVisible(false);

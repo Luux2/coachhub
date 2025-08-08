@@ -34,10 +34,6 @@ export const ViewStampCardScreen = () => {
     }
 
 
-
-
-
-
     if (stampCardLoading) {
         return <LoadingBar />;
     }
@@ -106,8 +102,8 @@ export const ViewStampCardScreen = () => {
 
                                     <button onClick={() => {
                                         setSelectedStampCard(stampCard);
-                                        console.log(stampCardId);
                                         setDeleteWarningVisible(true);
+                                        console.log(stampCardId);
                                     }}
                                             className="bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition-colors duration-300 flex gap-2">
                                         <XMarkIcon className="h-7" />
@@ -159,7 +155,9 @@ export const ViewStampCardScreen = () => {
                         </thead>
 
                             <tbody className="divide-y divide-gray-200">
-                            {Object.entries(stampCard.stamps || {}).map(([stampId, stamp]) => (
+                            {Object.entries(stampCard.stamps || {})
+                                .sort(([, a], [, b]) => new Date(b.stampDate).getTime() - new Date(a.stampDate).getTime())
+                                .map(([stampId, stamp]) => (
                                     <tr key={stampId} className="hover:bg-teal-600 transition-colors duration-500">
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{format(new Date(stamp.stampDate), "dd. MMMM, yyyy", {locale: da})}</td>
                                     <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">{stamp.stampsUsed} klip</td>

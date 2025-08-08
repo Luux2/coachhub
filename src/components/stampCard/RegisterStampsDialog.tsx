@@ -2,6 +2,7 @@ import {StampCardInterface} from "../../utils/interfaces.ts";
 import {CheckIcon, MinusIcon, PlusIcon, ScissorsIcon} from "@heroicons/react/24/outline";
 import {useEffect, useState} from "react";
 import StampCardService from "../../services/StampCardService.tsx";
+import {useUserData} from "../../context/AuthContext.tsx";
 
 export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardId}: {
     onClose: () => void;
@@ -10,6 +11,7 @@ export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardI
     stampCardId: string;
 }) => {
 
+    const { user } = useUserData();
     const [stampTitle, setStampTitle] = useState("");
     const [stampDescription, setStampDescription] = useState("");
     const [stampCount, setStampCount] = useState(stampCard?.currentStampCount ?? 0);
@@ -18,6 +20,7 @@ export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardI
     const localISO = new Date(now.getTime() - now.getTimezoneOffset() * 60000)
         .toISOString()
         .replace("Z", "");
+    const [stampDate, setStampDate] = useState(localISO);
 
     useEffect(() => {
         setStampCount(stampCard?.currentStampCount ?? 0);
@@ -58,13 +61,12 @@ export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardI
         const newStamp = {
             stampTitle: stampTitle,
             stampDescription: stampDescription,
-            stampDate: localISO,
-            stampResponsible: "pb",
+            stampDate: stampDate,
+            stampResponsible: user!.name.split(" ").filter(name => name.length > 0).map(name => name[0].toLowerCase()).join(""),
             stampsUsed: newStampsUsed, // Kun nye klip
         };
 
         try {
-            // Opdater både currentStampCount og tilføj den nye klip-registrering til stamps-arrayet
             await StampCardService.registerStamps(stampCardId, newStamp, updatedStampCount);
             alert("Klip registreret");
 
@@ -74,10 +76,6 @@ export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardI
 
         onRegister();
     };
-
-
-
-
 
     return (
         <div className="overflow-hidden rounded-lg shadow-2xl bg-white p-4 text-white">
@@ -97,8 +95,14 @@ export const RegisterStampsDialog = ({onClose, onRegister, stampCard, stampCardI
             <div>
                 <input onChange={(e) => setStampTitle(e.target.value)} type="text" placeholder="Opgavetitel" className="w-full border-2 border-gray-300 rounded p-2 mt-4 text-black"/>
             </div>
+
+                <form>
+                    <input type="date" id="datemin" name="datemin" min="2000-01-02" onChange={(e) => setStampDate(e.target.value)} className="w-full border-2 border-gray-300 rounded p-2 mt-4 text-black"/>
+                </form>
+
             <div>
-                <textarea onChange={(e) => setStampDescription(e.target.value)} placeholder="Tilføj beskrivelse" className="h-24 w-full border-2 border-gray-300 rounded mt-4 text-black"/>
+                <textarea onChange={(e) => setStampDescription(e.target.value)} placeholder="Tilføj beskrivelse"
+                          className="h-24 w-full border-2 border-gray-300 rounded mt-4 text-black"/>
             </div>
 
             <div className="my-10 flex justify-between">

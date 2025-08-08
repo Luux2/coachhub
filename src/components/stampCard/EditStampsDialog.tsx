@@ -2,6 +2,7 @@ import {StampCardInterface, StampInterface} from "../../utils/interfaces.ts";
 import {useEffect, useState} from "react";
 import StampCardService from "../../services/StampCardService.tsx";
 import {CheckIcon, MinusIcon, PlusIcon, ScissorsIcon} from "@heroicons/react/24/outline";
+import {useUserData} from "../../context/AuthContext.tsx";
 
 export const EditStampsDialog = ({ onClose, onEdit, stampCardId, stampCard, stamp, stampId}: {
     onClose: () => void;
@@ -12,6 +13,7 @@ export const EditStampsDialog = ({ onClose, onEdit, stampCardId, stampCard, stam
     stampId: string;
 }) => {
 
+    const { user } = useUserData();
     const [stampTitle, setStampTitle] = useState(stamp?.stampTitle || "");
     const [stampDescription, setStampDescription] = useState(stamp?.stampDescription || "");
     const [stampCount, setStampCount] = useState(stamp?.stampsUsed || 0);
@@ -60,7 +62,7 @@ export const EditStampsDialog = ({ onClose, onEdit, stampCardId, stampCard, stam
             stampTitle: stampTitle,
             stampDescription: stampDescription,
             stampDate: stamp?.stampDate,
-            stampResponsible: "pb",
+            stampResponsible: user!.name.split(" ").filter(name => name.length > 0).map(name => name[0].toLowerCase()).join(""),
             stampsUsed: stampCount,
         };
 

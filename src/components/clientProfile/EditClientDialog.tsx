@@ -147,15 +147,16 @@ export const EditClientDialog = ({onClose, client, clientId}: {
                         <select className="w-full rounded-lg border-gray-200 p-3 text-sm" id="status"
                                 onChange={handleChange} defaultValue={clientData.status}
                         >
-                            <option value="Emne">Emne</option>
-                            <option value="Kunde">Kunde</option>
-                            <option value="Tidligere kunde">Tidligere kunde</option>
-                            <option value="Samarbejdspartner">Samarbejdspartner</option>
-                            <option value="Leverandør">Leverandør</option>
-                            <option value="Kampagne">Kampagne</option>
-                            <option value="Cold Lead">Cold Lead</option>
-                            <option value="Akademiforløb - Kunde">Akademiforløb - Kunde</option>
                             <option value="Akademiforløb - Emne">Akademiforløb - Emne</option>
+                            <option value="Akademiforløb - Kunde">Akademiforløb - Kunde</option>
+                            <option value="Cold Lead">Cold Lead</option>
+                            <option value="Emne">Emne</option>
+                            <option value="Erhvervsakademi">Erhvervsakademi</option>
+                            <option value="Kampagne">Kampagne</option>
+                            <option value="Kunde">Kunde</option>
+                            <option value="Leverandør">Leverandør</option>
+                            <option value="Samarbejdspartner">Samarbejdspartner</option>
+                            <option value="Tidligere kunde">Tidligere kunde</option>
                         </select>
 
                         <div className="relative">
